@@ -1,0 +1,30 @@
+{
+  "name": "chartcat-be",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start:prod": "dotenv -e .env.prod -- nodemon -e ts,graphql -x ts-node src/index.ts",
+    "docker-compose:dev": "eval $(docker-machine env -u) && dotenv -- docker-compose",
+    "docker-compose:prod": "eval $(docker-machine env coffeecat) && dotenv -e .env.prod -- docker-compose -f docker-compose.yml -f docker-compose.prod.yml",
+    "prisma:dev": "dotenv -- prisma",
+    "prisma:prod": "dotenv -e .env.prod -- prisma",
+    "graphql:dev": "dotenv -- graphql"
+  },
+  "dependencies": {
+    "express": "4.16.3",
+    "http-proxy-middleware": "0.18.0"
+  },
+  "devDependencies": {
+    "@types/http-proxy-middleware": "0.17.5",
+    "dotenv-cli": "1.4.0",
+    "graphql-cli": "2.16.4",
+    "nodemon": "1.17.5",
+    "npm-run-all": "4.1.3",
+    "prisma": "1.11.0",
+    "rimraf": "2.6.2",
+    "ts-node": "6.2.0",
+    "tslint": "5.10.0",
+    "typescript": "2.9.2"
+  }
+}

@@ -1,0 +1,13 @@
+type Chart {
+  id: ID! @unique
+  slug: String! @unique
+  name: String
+  yAxisName: String
+  dataPoints: [DataPoint]
+}
+
+type DataPoint {
+  id: ID! @unique
+  dateTime: DateTime!
+  value: Float!
+}

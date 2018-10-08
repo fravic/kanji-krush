@@ -1,0 +1,62 @@
+{
+  "name": "chartcat-fe",
+  "version": "1.0.0",
+  "description": "Frontend for ChartCat",
+  "license": "MIT",
+  "scripts": {
+    "dev": "dotenv -- ts-node server.ts",
+    "build": "next build",
+    "start": "NODE_ENV=production ts-node server.ts",
+    "test": "dotenv -- jest",
+    "debug": "dotenv -- ts-node --inspect server.ts"
+  },
+  "engines": {
+    "node": ">=10 <11"
+  },
+  "dependencies": {
+    "@types/bcryptjs": "2.4.1",
+    "@types/jsonwebtoken": "7.2.7",
+    "@types/next": "6.0.4",
+    "@types/node": "10.5.2",
+    "@types/uuid": "3.4.3",
+    "@zeit/next-sass": "0.2.0",
+    "@zeit/next-typescript": "1.1.0",
+    "apollo-link-http": "1.5.4",
+    "bcryptjs": "2.4.3",
+    "dotenv-cli": "1.4.0",
+    "graphql-yoga": "1.14.12",
+    "jsonwebtoken": "8.3.0",
+    "next": "false7.0.1",
+    "next-apollo": "2.0.0",
+    "node-sass": "4.9.2",
+    "prisma-binding": "2.1.0",
+    "react": "16.4.1",
+    "react-apollo": "2.1.9",
+    "react-dom": "16.4.1",
+    "ts-node": "7.0.0",
+    "typescript": "2.9.2",
+    "uuid": "3.3.0"
+  },
+  "devDependencies": {
+    "@types/jest": "23.1.1",
+    "@types/supertest": "2.0.4",
+    "jest": "23.1.0",
+    "supertest": "3.1.0",
+    "ts-jest": "22.4.6",
+    "tslint": "5.10.0"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
+  }
+}

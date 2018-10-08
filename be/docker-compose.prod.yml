@@ -1,0 +1,11 @@
+version: '3'
+services:
+  # Container for Node SSL proxy. No need to run in dev.
+  node:
+    build: "."
+    ports:
+    - "${NODEJS_PROXY_PORT}:${NODEJS_PROXY_PORT}"
+    environment:
+      - NODE_ENV=production
+      - PRISMA_ENDPOINT=${PRISMA_ENDPOINT}
+      - NODEJS_PROXY_PORT=${NODEJS_PROXY_PORT}

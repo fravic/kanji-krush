@@ -1,0 +1,39 @@
+@import "scss/variables.scss";
+
+.component {
+  &.body {
+    font-size: 1rem;
+    line-height: 1.5rem;
+
+    font-family: $font-sans;
+    color: $c-text-body;
+  }
+
+  &.h1 {
+    font-size: 2rem;
+    line-height: 2.6rem;
+
+    font-family: $font-serif;
+    font-weight: normal;
+    color: $c-text-header;
+  }
+
+  &.h2 {
+    font-size: 1.125rem;
+    line-height: 1.5rem;
+
+    font-weight: bold;
+    font-family: $font-serif;
+    color: $c-text-header;
+  }
+
+  &.label {
+    font-size: 0.875rem;
+    line-height: 1rem;
+
+    color: $c-text-header;
+    font-family: $font-serif;
+    font-weight: bold;
+    text-transform: lowercase;
+  }
+}

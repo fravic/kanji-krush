@@ -1,0 +1,30 @@
+@import "scss/variables.scss";
+
+.homepage {
+  .name {
+    font-size: 1rem;
+
+    font-family: $font-serif;
+    font-weight: bold;
+  }
+
+  .h1 {
+    @include optimal-text-width;
+    margin: space(2) 0 space(3);
+
+    .highlight {
+      border-bottom: 1px dashed $c-yellow;
+
+      color: $c-text-highlight;
+    }
+  }
+
+  .p {
+    @include optimal-text-width;
+    margin-bottom: space(8);
+  }
+
+  .form {
+    margin-bottom: space(8);
+  }
+}

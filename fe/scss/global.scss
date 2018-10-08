@@ -1,0 +1,19 @@
+@import "scss/variables.scss";
+
+:global {
+  @import "scss/reset.scss";
+
+  /* Set root font sizes */
+  html {
+    font-size: 16px;
+    @media(min-width: $tablet) {
+      font-size: 16px;
+    }
+    @media(min-width: $desktop) {
+      font-size: 20px;
+    }
+    @media(min-width: $wide-desktop) {
+      font-size: 24px;
+    }
+  }
+}

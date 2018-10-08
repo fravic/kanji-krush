@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": ".",
+    "target": "es5",
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "jsx": "preserve",
+    "sourceMap": true,
+    "outDir": "dist",
+    "lib": [
+      "esnext", "dom"
+    ]
+  }
+}

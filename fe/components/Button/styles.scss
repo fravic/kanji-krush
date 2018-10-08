@@ -1,0 +1,24 @@
+@import "scss/variables.scss";
+
+.button {
+  $border-color: darken($c-cta, 15%);
+  appearance: none;
+  border: 1px solid $border-color;
+  border-bottom: 3px solid $border-color;
+  font-size: 0.875rem;
+  line-height: 2.5rem;
+  padding: 0 2rem;
+
+  background-color: $c-cta;
+  background-image: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(0,0,0,0.05));
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  color: white;
+  font-family: $font-serif;
+  font-weight: bold;
+
+  &:disabled {
+    background-color: $c-gray;
+    border-color: darken($c-gray, 15%);
+  }
+}

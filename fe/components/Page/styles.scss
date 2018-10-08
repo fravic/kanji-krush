@@ -1,0 +1,19 @@
+@import "scss/global.scss";
+
+.page {
+  box-sizing: border-box;
+  min-height: 100vh;
+  position: relative;
+
+  padding: $page-padding-mobile;
+  @media(min-width: $desktop) {
+    padding: $page-padding-desktop;
+  }
+
+  .footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+  }
+}

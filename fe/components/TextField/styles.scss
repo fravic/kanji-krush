@@ -1,0 +1,29 @@
+@import "scss/variables.scss";
+
+.component {
+  .label {
+    margin-bottom: space(1);
+  }
+
+  .input {
+    border: 1px solid $c-border;
+    box-sizing: border-box;
+    font-size: 0.875rem;
+    line-height: 2.5rem;
+    padding: 0 0.75rem;
+    width: 100%;
+
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+    font-family: $font-sans;
+    outline: none;
+
+    &:focus {
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    &:disabled {
+      background-color: #efefef;
+    }
+  }
+}

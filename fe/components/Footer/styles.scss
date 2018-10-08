@@ -1,0 +1,18 @@
+@import "scss/variables.scss";
+
+.footer {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  line-height: 2.2rem;
+  font-size: 0.8rem;
+
+  background: $c-bg-dark;
+  color: white;
+  font-family: $font-sans;
+
+  padding: 0 $page-padding-mobile;
+  @media(min-width: $desktop) {
+    padding: 0 $page-padding-desktop;
+  }
+}
