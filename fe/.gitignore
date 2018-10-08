@@ -4,4 +4,5 @@ node_modules
 .vscode
 *.log
 .next
-.env*
+.env
+.env.prod
