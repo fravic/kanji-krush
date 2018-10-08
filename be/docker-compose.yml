@@ -17,6 +17,7 @@ services:
             user: prisma
             password: prisma
             migrations: true
+            database: ${DATABASE_NAME}
   postgres:
     image: postgres
     restart: always

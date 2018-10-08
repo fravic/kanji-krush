@@ -1,462 +1,12 @@
-# source: http://localhost:4466
-# timestamp: Sun Jul 15 2018 17:44:41 GMT-0700 (DST)
+# source: http://localhost:4467
+# timestamp: Sun Oct 07 2018 17:34:57 GMT-0700 (DST)
 
-type AdminAccount implements Node {
-  id: ID!
-  user(where: UserWhereInput): User!
-  group(where: MeetupGroupWhereInput): MeetupGroup!
-  canAddAdmins: Boolean!
-}
-
-"""A connection to a list of items."""
-type AdminAccountConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [AdminAccountEdge]!
-  aggregate: AggregateAdminAccount!
-}
-
-input AdminAccountCreateInput {
-  canAddAdmins: Boolean
-  user: UserCreateOneWithoutAdminAccountsInput!
-  group: MeetupGroupCreateOneWithoutAdminsInput!
-}
-
-input AdminAccountCreateManyWithoutGroupInput {
-  create: [AdminAccountCreateWithoutGroupInput!]
-  connect: [AdminAccountWhereUniqueInput!]
-}
-
-input AdminAccountCreateManyWithoutUserInput {
-  create: [AdminAccountCreateWithoutUserInput!]
-  connect: [AdminAccountWhereUniqueInput!]
-}
-
-input AdminAccountCreateWithoutGroupInput {
-  canAddAdmins: Boolean
-  user: UserCreateOneWithoutAdminAccountsInput!
-}
-
-input AdminAccountCreateWithoutUserInput {
-  canAddAdmins: Boolean
-  group: MeetupGroupCreateOneWithoutAdminsInput!
-}
-
-"""An edge in a connection."""
-type AdminAccountEdge {
-  """The item at the end of the edge."""
-  node: AdminAccount!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum AdminAccountOrderByInput {
-  id_ASC
-  id_DESC
-  canAddAdmins_ASC
-  canAddAdmins_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-}
-
-type AdminAccountPreviousValues {
-  id: ID!
-  canAddAdmins: Boolean!
-}
-
-type AdminAccountSubscriptionPayload {
-  mutation: MutationType!
-  node: AdminAccount
-  updatedFields: [String!]
-  previousValues: AdminAccountPreviousValues
-}
-
-input AdminAccountSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [AdminAccountSubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [AdminAccountSubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [AdminAccountSubscriptionWhereInput!]
-
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: AdminAccountWhereInput
-}
-
-input AdminAccountUpdateInput {
-  canAddAdmins: Boolean
-  user: UserUpdateOneWithoutAdminAccountsInput
-  group: MeetupGroupUpdateOneWithoutAdminsInput
-}
-
-input AdminAccountUpdateManyWithoutGroupInput {
-  create: [AdminAccountCreateWithoutGroupInput!]
-  connect: [AdminAccountWhereUniqueInput!]
-  disconnect: [AdminAccountWhereUniqueInput!]
-  delete: [AdminAccountWhereUniqueInput!]
-  update: [AdminAccountUpdateWithWhereUniqueWithoutGroupInput!]
-  upsert: [AdminAccountUpsertWithWhereUniqueWithoutGroupInput!]
-}
-
-input AdminAccountUpdateManyWithoutUserInput {
-  create: [AdminAccountCreateWithoutUserInput!]
-  connect: [AdminAccountWhereUniqueInput!]
-  disconnect: [AdminAccountWhereUniqueInput!]
-  delete: [AdminAccountWhereUniqueInput!]
-  update: [AdminAccountUpdateWithWhereUniqueWithoutUserInput!]
-  upsert: [AdminAccountUpsertWithWhereUniqueWithoutUserInput!]
-}
-
-input AdminAccountUpdateWithoutGroupDataInput {
-  canAddAdmins: Boolean
-  user: UserUpdateOneWithoutAdminAccountsInput
-}
-
-input AdminAccountUpdateWithoutUserDataInput {
-  canAddAdmins: Boolean
-  group: MeetupGroupUpdateOneWithoutAdminsInput
-}
-
-input AdminAccountUpdateWithWhereUniqueWithoutGroupInput {
-  where: AdminAccountWhereUniqueInput!
-  data: AdminAccountUpdateWithoutGroupDataInput!
-}
-
-input AdminAccountUpdateWithWhereUniqueWithoutUserInput {
-  where: AdminAccountWhereUniqueInput!
-  data: AdminAccountUpdateWithoutUserDataInput!
-}
-
-input AdminAccountUpsertWithWhereUniqueWithoutGroupInput {
-  where: AdminAccountWhereUniqueInput!
-  update: AdminAccountUpdateWithoutGroupDataInput!
-  create: AdminAccountCreateWithoutGroupInput!
-}
-
-input AdminAccountUpsertWithWhereUniqueWithoutUserInput {
-  where: AdminAccountWhereUniqueInput!
-  update: AdminAccountUpdateWithoutUserDataInput!
-  create: AdminAccountCreateWithoutUserInput!
-}
-
-input AdminAccountWhereInput {
-  """Logical AND on all given filters."""
-  AND: [AdminAccountWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [AdminAccountWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [AdminAccountWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  canAddAdmins: Boolean
-
-  """All values that are not equal to given value."""
-  canAddAdmins_not: Boolean
-  user: UserWhereInput
-  group: MeetupGroupWhereInput
-}
-
-input AdminAccountWhereUniqueInput {
-  id: ID
-}
-
-type AggregateAdminAccount {
+type AggregateChart {
   count: Int!
 }
 
-type AggregateAttendance {
+type AggregateDataPoint {
   count: Int!
-}
-
-type AggregateMeeting {
-  count: Int!
-}
-
-type AggregateMeetupAccount {
-  count: Int!
-}
-
-type AggregateMeetupGroup {
-  count: Int!
-}
-
-type AggregateMeetupPool {
-  count: Int!
-}
-
-type AggregateName {
-  count: Int!
-}
-
-type AggregateTimeslot {
-  count: Int!
-}
-
-type AggregateUnverifiedMeetupAccount {
-  count: Int!
-}
-
-type AggregateUser {
-  count: Int!
-}
-
-type Attendance implements Node {
-  id: ID!
-  member(where: MeetupAccountWhereInput): MeetupAccount!
-  state: AttendanceState!
-}
-
-"""A connection to a list of items."""
-type AttendanceConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [AttendanceEdge]!
-  aggregate: AggregateAttendance!
-}
-
-input AttendanceCreateInput {
-  state: AttendanceState!
-  member: MeetupAccountCreateOneInput!
-}
-
-input AttendanceCreateManyInput {
-  create: [AttendanceCreateInput!]
-  connect: [AttendanceWhereUniqueInput!]
-}
-
-"""An edge in a connection."""
-type AttendanceEdge {
-  """The item at the end of the edge."""
-  node: Attendance!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum AttendanceOrderByInput {
-  id_ASC
-  id_DESC
-  state_ASC
-  state_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-}
-
-type AttendancePreviousValues {
-  id: ID!
-  state: AttendanceState!
-}
-
-enum AttendanceState {
-  SCHEDULED
-  RESCHEDULED
-  CONFIRMED
-  CANCELLED
-  ATTENDED
-}
-
-type AttendanceSubscriptionPayload {
-  mutation: MutationType!
-  node: Attendance
-  updatedFields: [String!]
-  previousValues: AttendancePreviousValues
-}
-
-input AttendanceSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [AttendanceSubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [AttendanceSubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [AttendanceSubscriptionWhereInput!]
-
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: AttendanceWhereInput
-}
-
-input AttendanceUpdateDataInput {
-  state: AttendanceState
-  member: MeetupAccountUpdateOneInput
-}
-
-input AttendanceUpdateInput {
-  state: AttendanceState
-  member: MeetupAccountUpdateOneInput
-}
-
-input AttendanceUpdateManyInput {
-  create: [AttendanceCreateInput!]
-  connect: [AttendanceWhereUniqueInput!]
-  disconnect: [AttendanceWhereUniqueInput!]
-  delete: [AttendanceWhereUniqueInput!]
-  update: [AttendanceUpdateWithWhereUniqueNestedInput!]
-  upsert: [AttendanceUpsertWithWhereUniqueNestedInput!]
-}
-
-input AttendanceUpdateWithWhereUniqueNestedInput {
-  where: AttendanceWhereUniqueInput!
-  data: AttendanceUpdateDataInput!
-}
-
-input AttendanceUpsertWithWhereUniqueNestedInput {
-  where: AttendanceWhereUniqueInput!
-  update: AttendanceUpdateDataInput!
-  create: AttendanceCreateInput!
-}
-
-input AttendanceWhereInput {
-  """Logical AND on all given filters."""
-  AND: [AttendanceWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [AttendanceWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [AttendanceWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  state: AttendanceState
-
-  """All values that are not equal to given value."""
-  state_not: AttendanceState
-
-  """All values that are contained in given list."""
-  state_in: [AttendanceState!]
-
-  """All values that are not contained in given list."""
-  state_not_in: [AttendanceState!]
-  member: MeetupAccountWhereInput
-}
-
-input AttendanceWhereUniqueInput {
-  id: ID
 }
 
 type BatchPayload {
@@ -464,746 +14,78 @@ type BatchPayload {
   count: Long!
 }
 
-scalar DateTime
-
-enum DayOfWeek {
-  SUN
-  MON
-  TUE
-  WED
-  THU
-  FRI
-  SAT
-}
-
-"""
-The `Long` scalar type represents non-fractional signed whole numeric values.
-Long can represent values between -(2^63) and 2^63 - 1.
-"""
-scalar Long
-
-type Meeting implements Node {
+type Chart implements Node {
   id: ID!
-  attendances(where: AttendanceWhereInput, orderBy: AttendanceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Attendance!]
-  dateTime: DateTime!
+  slug: String!
+  name: String
+  yAxisName: String
+  dataPoints(where: DataPointWhereInput, orderBy: DataPointOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DataPoint!]
 }
 
 """A connection to a list of items."""
-type MeetingConnection {
+type ChartConnection {
   """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """A list of edges."""
-  edges: [MeetingEdge]!
-  aggregate: AggregateMeeting!
+  edges: [ChartEdge]!
+  aggregate: AggregateChart!
 }
 
-input MeetingCreateInput {
-  dateTime: DateTime!
-  attendances: AttendanceCreateManyInput
+input ChartCreateInput {
+  slug: String!
+  name: String
+  yAxisName: String
+  dataPoints: DataPointCreateManyInput
 }
 
 """An edge in a connection."""
-type MeetingEdge {
+type ChartEdge {
   """The item at the end of the edge."""
-  node: Meeting!
+  node: Chart!
 
   """A cursor for use in pagination."""
   cursor: String!
 }
 
-enum MeetingOrderByInput {
+enum ChartOrderByInput {
   id_ASC
   id_DESC
-  dateTime_ASC
-  dateTime_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-}
-
-type MeetingPreviousValues {
-  id: ID!
-  dateTime: DateTime!
-}
-
-type MeetingSubscriptionPayload {
-  mutation: MutationType!
-  node: Meeting
-  updatedFields: [String!]
-  previousValues: MeetingPreviousValues
-}
-
-input MeetingSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [MeetingSubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [MeetingSubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [MeetingSubscriptionWhereInput!]
-
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: MeetingWhereInput
-}
-
-input MeetingUpdateInput {
-  dateTime: DateTime
-  attendances: AttendanceUpdateManyInput
-}
-
-input MeetingWhereInput {
-  """Logical AND on all given filters."""
-  AND: [MeetingWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [MeetingWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [MeetingWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  dateTime: DateTime
-
-  """All values that are not equal to given value."""
-  dateTime_not: DateTime
-
-  """All values that are contained in given list."""
-  dateTime_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  dateTime_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  dateTime_lt: DateTime
-
-  """All values less than or equal the given value."""
-  dateTime_lte: DateTime
-
-  """All values greater than the given value."""
-  dateTime_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  dateTime_gte: DateTime
-  attendances_every: AttendanceWhereInput
-  attendances_some: AttendanceWhereInput
-  attendances_none: AttendanceWhereInput
-}
-
-input MeetingWhereUniqueInput {
-  id: ID
-}
-
-type MeetupAccount implements Node {
-  id: ID!
-  user(where: UserWhereInput): User!
-  name(where: NameWhereInput): Name
-  onlineProfileUrl: String
-  bio: String
-  meetupGroup(where: MeetupGroupWhereInput): MeetupGroup!
-  approved: Boolean!
-  disabled: Boolean!
-  banned: Boolean!
-  timelotPreferences(where: TimeslotWhereInput, orderBy: TimeslotOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Timeslot!]
-}
-
-"""A connection to a list of items."""
-type MeetupAccountConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [MeetupAccountEdge]!
-  aggregate: AggregateMeetupAccount!
-}
-
-input MeetupAccountCreateInput {
-  onlineProfileUrl: String
-  bio: String
-  approved: Boolean
-  disabled: Boolean
-  banned: Boolean
-  user: UserCreateOneWithoutMeetupAccountsInput!
-  name: NameCreateOneInput
-  meetupGroup: MeetupGroupCreateOneWithoutMembersInput!
-  timelotPreferences: TimeslotCreateManyInput
-}
-
-input MeetupAccountCreateManyInput {
-  create: [MeetupAccountCreateInput!]
-  connect: [MeetupAccountWhereUniqueInput!]
-}
-
-input MeetupAccountCreateManyWithoutMeetupGroupInput {
-  create: [MeetupAccountCreateWithoutMeetupGroupInput!]
-  connect: [MeetupAccountWhereUniqueInput!]
-}
-
-input MeetupAccountCreateManyWithoutUserInput {
-  create: [MeetupAccountCreateWithoutUserInput!]
-  connect: [MeetupAccountWhereUniqueInput!]
-}
-
-input MeetupAccountCreateOneInput {
-  create: MeetupAccountCreateInput
-  connect: MeetupAccountWhereUniqueInput
-}
-
-input MeetupAccountCreateWithoutMeetupGroupInput {
-  onlineProfileUrl: String
-  bio: String
-  approved: Boolean
-  disabled: Boolean
-  banned: Boolean
-  user: UserCreateOneWithoutMeetupAccountsInput!
-  name: NameCreateOneInput
-  timelotPreferences: TimeslotCreateManyInput
-}
-
-input MeetupAccountCreateWithoutUserInput {
-  onlineProfileUrl: String
-  bio: String
-  approved: Boolean
-  disabled: Boolean
-  banned: Boolean
-  name: NameCreateOneInput
-  meetupGroup: MeetupGroupCreateOneWithoutMembersInput!
-  timelotPreferences: TimeslotCreateManyInput
-}
-
-"""An edge in a connection."""
-type MeetupAccountEdge {
-  """The item at the end of the edge."""
-  node: MeetupAccount!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum MeetupAccountOrderByInput {
-  id_ASC
-  id_DESC
-  onlineProfileUrl_ASC
-  onlineProfileUrl_DESC
-  bio_ASC
-  bio_DESC
-  approved_ASC
-  approved_DESC
-  disabled_ASC
-  disabled_DESC
-  banned_ASC
-  banned_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-}
-
-type MeetupAccountPreviousValues {
-  id: ID!
-  onlineProfileUrl: String
-  bio: String
-  approved: Boolean!
-  disabled: Boolean!
-  banned: Boolean!
-}
-
-type MeetupAccountSubscriptionPayload {
-  mutation: MutationType!
-  node: MeetupAccount
-  updatedFields: [String!]
-  previousValues: MeetupAccountPreviousValues
-}
-
-input MeetupAccountSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [MeetupAccountSubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [MeetupAccountSubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [MeetupAccountSubscriptionWhereInput!]
-
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: MeetupAccountWhereInput
-}
-
-input MeetupAccountUpdateDataInput {
-  onlineProfileUrl: String
-  bio: String
-  approved: Boolean
-  disabled: Boolean
-  banned: Boolean
-  user: UserUpdateOneWithoutMeetupAccountsInput
-  name: NameUpdateOneInput
-  meetupGroup: MeetupGroupUpdateOneWithoutMembersInput
-  timelotPreferences: TimeslotUpdateManyInput
-}
-
-input MeetupAccountUpdateInput {
-  onlineProfileUrl: String
-  bio: String
-  approved: Boolean
-  disabled: Boolean
-  banned: Boolean
-  user: UserUpdateOneWithoutMeetupAccountsInput
-  name: NameUpdateOneInput
-  meetupGroup: MeetupGroupUpdateOneWithoutMembersInput
-  timelotPreferences: TimeslotUpdateManyInput
-}
-
-input MeetupAccountUpdateManyInput {
-  create: [MeetupAccountCreateInput!]
-  connect: [MeetupAccountWhereUniqueInput!]
-  disconnect: [MeetupAccountWhereUniqueInput!]
-  delete: [MeetupAccountWhereUniqueInput!]
-  update: [MeetupAccountUpdateWithWhereUniqueNestedInput!]
-  upsert: [MeetupAccountUpsertWithWhereUniqueNestedInput!]
-}
-
-input MeetupAccountUpdateManyWithoutMeetupGroupInput {
-  create: [MeetupAccountCreateWithoutMeetupGroupInput!]
-  connect: [MeetupAccountWhereUniqueInput!]
-  disconnect: [MeetupAccountWhereUniqueInput!]
-  delete: [MeetupAccountWhereUniqueInput!]
-  update: [MeetupAccountUpdateWithWhereUniqueWithoutMeetupGroupInput!]
-  upsert: [MeetupAccountUpsertWithWhereUniqueWithoutMeetupGroupInput!]
-}
-
-input MeetupAccountUpdateManyWithoutUserInput {
-  create: [MeetupAccountCreateWithoutUserInput!]
-  connect: [MeetupAccountWhereUniqueInput!]
-  disconnect: [MeetupAccountWhereUniqueInput!]
-  delete: [MeetupAccountWhereUniqueInput!]
-  update: [MeetupAccountUpdateWithWhereUniqueWithoutUserInput!]
-  upsert: [MeetupAccountUpsertWithWhereUniqueWithoutUserInput!]
-}
-
-input MeetupAccountUpdateOneInput {
-  create: MeetupAccountCreateInput
-  connect: MeetupAccountWhereUniqueInput
-  delete: Boolean
-  update: MeetupAccountUpdateDataInput
-  upsert: MeetupAccountUpsertNestedInput
-}
-
-input MeetupAccountUpdateWithoutMeetupGroupDataInput {
-  onlineProfileUrl: String
-  bio: String
-  approved: Boolean
-  disabled: Boolean
-  banned: Boolean
-  user: UserUpdateOneWithoutMeetupAccountsInput
-  name: NameUpdateOneInput
-  timelotPreferences: TimeslotUpdateManyInput
-}
-
-input MeetupAccountUpdateWithoutUserDataInput {
-  onlineProfileUrl: String
-  bio: String
-  approved: Boolean
-  disabled: Boolean
-  banned: Boolean
-  name: NameUpdateOneInput
-  meetupGroup: MeetupGroupUpdateOneWithoutMembersInput
-  timelotPreferences: TimeslotUpdateManyInput
-}
-
-input MeetupAccountUpdateWithWhereUniqueNestedInput {
-  where: MeetupAccountWhereUniqueInput!
-  data: MeetupAccountUpdateDataInput!
-}
-
-input MeetupAccountUpdateWithWhereUniqueWithoutMeetupGroupInput {
-  where: MeetupAccountWhereUniqueInput!
-  data: MeetupAccountUpdateWithoutMeetupGroupDataInput!
-}
-
-input MeetupAccountUpdateWithWhereUniqueWithoutUserInput {
-  where: MeetupAccountWhereUniqueInput!
-  data: MeetupAccountUpdateWithoutUserDataInput!
-}
-
-input MeetupAccountUpsertNestedInput {
-  update: MeetupAccountUpdateDataInput!
-  create: MeetupAccountCreateInput!
-}
-
-input MeetupAccountUpsertWithWhereUniqueNestedInput {
-  where: MeetupAccountWhereUniqueInput!
-  update: MeetupAccountUpdateDataInput!
-  create: MeetupAccountCreateInput!
-}
-
-input MeetupAccountUpsertWithWhereUniqueWithoutMeetupGroupInput {
-  where: MeetupAccountWhereUniqueInput!
-  update: MeetupAccountUpdateWithoutMeetupGroupDataInput!
-  create: MeetupAccountCreateWithoutMeetupGroupInput!
-}
-
-input MeetupAccountUpsertWithWhereUniqueWithoutUserInput {
-  where: MeetupAccountWhereUniqueInput!
-  update: MeetupAccountUpdateWithoutUserDataInput!
-  create: MeetupAccountCreateWithoutUserInput!
-}
-
-input MeetupAccountWhereInput {
-  """Logical AND on all given filters."""
-  AND: [MeetupAccountWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [MeetupAccountWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [MeetupAccountWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  onlineProfileUrl: String
-
-  """All values that are not equal to given value."""
-  onlineProfileUrl_not: String
-
-  """All values that are contained in given list."""
-  onlineProfileUrl_in: [String!]
-
-  """All values that are not contained in given list."""
-  onlineProfileUrl_not_in: [String!]
-
-  """All values less than the given value."""
-  onlineProfileUrl_lt: String
-
-  """All values less than or equal the given value."""
-  onlineProfileUrl_lte: String
-
-  """All values greater than the given value."""
-  onlineProfileUrl_gt: String
-
-  """All values greater than or equal the given value."""
-  onlineProfileUrl_gte: String
-
-  """All values containing the given string."""
-  onlineProfileUrl_contains: String
-
-  """All values not containing the given string."""
-  onlineProfileUrl_not_contains: String
-
-  """All values starting with the given string."""
-  onlineProfileUrl_starts_with: String
-
-  """All values not starting with the given string."""
-  onlineProfileUrl_not_starts_with: String
-
-  """All values ending with the given string."""
-  onlineProfileUrl_ends_with: String
-
-  """All values not ending with the given string."""
-  onlineProfileUrl_not_ends_with: String
-  bio: String
-
-  """All values that are not equal to given value."""
-  bio_not: String
-
-  """All values that are contained in given list."""
-  bio_in: [String!]
-
-  """All values that are not contained in given list."""
-  bio_not_in: [String!]
-
-  """All values less than the given value."""
-  bio_lt: String
-
-  """All values less than or equal the given value."""
-  bio_lte: String
-
-  """All values greater than the given value."""
-  bio_gt: String
-
-  """All values greater than or equal the given value."""
-  bio_gte: String
-
-  """All values containing the given string."""
-  bio_contains: String
-
-  """All values not containing the given string."""
-  bio_not_contains: String
-
-  """All values starting with the given string."""
-  bio_starts_with: String
-
-  """All values not starting with the given string."""
-  bio_not_starts_with: String
-
-  """All values ending with the given string."""
-  bio_ends_with: String
-
-  """All values not ending with the given string."""
-  bio_not_ends_with: String
-  approved: Boolean
-
-  """All values that are not equal to given value."""
-  approved_not: Boolean
-  disabled: Boolean
-
-  """All values that are not equal to given value."""
-  disabled_not: Boolean
-  banned: Boolean
-
-  """All values that are not equal to given value."""
-  banned_not: Boolean
-  user: UserWhereInput
-  name: NameWhereInput
-  meetupGroup: MeetupGroupWhereInput
-  timelotPreferences_every: TimeslotWhereInput
-  timelotPreferences_some: TimeslotWhereInput
-  timelotPreferences_none: TimeslotWhereInput
-}
-
-input MeetupAccountWhereUniqueInput {
-  id: ID
-}
-
-type MeetupGroup implements Node {
-  id: ID!
-  name: String!
-  admins(where: AdminAccountWhereInput, orderBy: AdminAccountOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [AdminAccount!]
-  members(where: MeetupAccountWhereInput, orderBy: MeetupAccountOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MeetupAccount!]
-  active: Boolean!
-  minUsersToActivate: Int!
-  timeslotOptions(where: TimeslotWhereInput, orderBy: TimeslotOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Timeslot!]
-  pools(where: MeetupPoolWhereInput, orderBy: MeetupPoolOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MeetupPool!]
-  onlineProfileUrlTypes: [OnlineProfileUrlType!]
-  isForTesting: Boolean!
-}
-
-"""A connection to a list of items."""
-type MeetupGroupConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [MeetupGroupEdge]!
-  aggregate: AggregateMeetupGroup!
-}
-
-input MeetupGroupCreateInput {
-  name: String!
-  active: Boolean
-  minUsersToActivate: Int!
-  isForTesting: Boolean!
-  onlineProfileUrlTypes: MeetupGroupCreateonlineProfileUrlTypesInput
-  admins: AdminAccountCreateManyWithoutGroupInput
-  members: MeetupAccountCreateManyWithoutMeetupGroupInput
-  timeslotOptions: TimeslotCreateManyInput
-  pools: MeetupPoolCreateManyInput
-}
-
-input MeetupGroupCreateOneInput {
-  create: MeetupGroupCreateInput
-  connect: MeetupGroupWhereUniqueInput
-}
-
-input MeetupGroupCreateOneWithoutAdminsInput {
-  create: MeetupGroupCreateWithoutAdminsInput
-  connect: MeetupGroupWhereUniqueInput
-}
-
-input MeetupGroupCreateOneWithoutMembersInput {
-  create: MeetupGroupCreateWithoutMembersInput
-  connect: MeetupGroupWhereUniqueInput
-}
-
-input MeetupGroupCreateonlineProfileUrlTypesInput {
-  set: [OnlineProfileUrlType!]
-}
-
-input MeetupGroupCreateWithoutAdminsInput {
-  name: String!
-  active: Boolean
-  minUsersToActivate: Int!
-  isForTesting: Boolean!
-  onlineProfileUrlTypes: MeetupGroupCreateonlineProfileUrlTypesInput
-  members: MeetupAccountCreateManyWithoutMeetupGroupInput
-  timeslotOptions: TimeslotCreateManyInput
-  pools: MeetupPoolCreateManyInput
-}
-
-input MeetupGroupCreateWithoutMembersInput {
-  name: String!
-  active: Boolean
-  minUsersToActivate: Int!
-  isForTesting: Boolean!
-  onlineProfileUrlTypes: MeetupGroupCreateonlineProfileUrlTypesInput
-  admins: AdminAccountCreateManyWithoutGroupInput
-  timeslotOptions: TimeslotCreateManyInput
-  pools: MeetupPoolCreateManyInput
-}
-
-"""An edge in a connection."""
-type MeetupGroupEdge {
-  """The item at the end of the edge."""
-  node: MeetupGroup!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum MeetupGroupOrderByInput {
-  id_ASC
-  id_DESC
+  slug_ASC
+  slug_DESC
   name_ASC
   name_DESC
-  active_ASC
-  active_DESC
-  minUsersToActivate_ASC
-  minUsersToActivate_DESC
-  isForTesting_ASC
-  isForTesting_DESC
+  yAxisName_ASC
+  yAxisName_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
   createdAt_DESC
 }
 
-type MeetupGroupPreviousValues {
+type ChartPreviousValues {
   id: ID!
-  name: String!
-  active: Boolean!
-  minUsersToActivate: Int!
-  onlineProfileUrlTypes: [OnlineProfileUrlType!]
-  isForTesting: Boolean!
+  slug: String!
+  name: String
+  yAxisName: String
 }
 
-type MeetupGroupSubscriptionPayload {
+type ChartSubscriptionPayload {
   mutation: MutationType!
-  node: MeetupGroup
+  node: Chart
   updatedFields: [String!]
-  previousValues: MeetupGroupPreviousValues
+  previousValues: ChartPreviousValues
 }
 
-input MeetupGroupSubscriptionWhereInput {
+input ChartSubscriptionWhereInput {
   """Logical AND on all given filters."""
-  AND: [MeetupGroupSubscriptionWhereInput!]
+  AND: [ChartSubscriptionWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [MeetupGroupSubscriptionWhereInput!]
+  OR: [ChartSubscriptionWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [MeetupGroupSubscriptionWhereInput!]
+  NOT: [ChartSubscriptionWhereInput!]
 
   """
   The subscription event gets dispatched when it's listed in mutation_in
@@ -1224,107 +106,25 @@ input MeetupGroupSubscriptionWhereInput {
   The subscription event gets only dispatched when some of the field names included in this list have been updated
   """
   updatedFields_contains_some: [String!]
-  node: MeetupGroupWhereInput
+  node: ChartWhereInput
 }
 
-input MeetupGroupUpdateDataInput {
+input ChartUpdateInput {
+  slug: String
   name: String
-  active: Boolean
-  minUsersToActivate: Int
-  isForTesting: Boolean
-  onlineProfileUrlTypes: MeetupGroupUpdateonlineProfileUrlTypesInput
-  admins: AdminAccountUpdateManyWithoutGroupInput
-  members: MeetupAccountUpdateManyWithoutMeetupGroupInput
-  timeslotOptions: TimeslotUpdateManyInput
-  pools: MeetupPoolUpdateManyInput
+  yAxisName: String
+  dataPoints: DataPointUpdateManyInput
 }
 
-input MeetupGroupUpdateInput {
-  name: String
-  active: Boolean
-  minUsersToActivate: Int
-  isForTesting: Boolean
-  onlineProfileUrlTypes: MeetupGroupUpdateonlineProfileUrlTypesInput
-  admins: AdminAccountUpdateManyWithoutGroupInput
-  members: MeetupAccountUpdateManyWithoutMeetupGroupInput
-  timeslotOptions: TimeslotUpdateManyInput
-  pools: MeetupPoolUpdateManyInput
-}
-
-input MeetupGroupUpdateOneInput {
-  create: MeetupGroupCreateInput
-  connect: MeetupGroupWhereUniqueInput
-  delete: Boolean
-  update: MeetupGroupUpdateDataInput
-  upsert: MeetupGroupUpsertNestedInput
-}
-
-input MeetupGroupUpdateOneWithoutAdminsInput {
-  create: MeetupGroupCreateWithoutAdminsInput
-  connect: MeetupGroupWhereUniqueInput
-  delete: Boolean
-  update: MeetupGroupUpdateWithoutAdminsDataInput
-  upsert: MeetupGroupUpsertWithoutAdminsInput
-}
-
-input MeetupGroupUpdateOneWithoutMembersInput {
-  create: MeetupGroupCreateWithoutMembersInput
-  connect: MeetupGroupWhereUniqueInput
-  delete: Boolean
-  update: MeetupGroupUpdateWithoutMembersDataInput
-  upsert: MeetupGroupUpsertWithoutMembersInput
-}
-
-input MeetupGroupUpdateonlineProfileUrlTypesInput {
-  set: [OnlineProfileUrlType!]
-}
-
-input MeetupGroupUpdateWithoutAdminsDataInput {
-  name: String
-  active: Boolean
-  minUsersToActivate: Int
-  isForTesting: Boolean
-  onlineProfileUrlTypes: MeetupGroupUpdateonlineProfileUrlTypesInput
-  members: MeetupAccountUpdateManyWithoutMeetupGroupInput
-  timeslotOptions: TimeslotUpdateManyInput
-  pools: MeetupPoolUpdateManyInput
-}
-
-input MeetupGroupUpdateWithoutMembersDataInput {
-  name: String
-  active: Boolean
-  minUsersToActivate: Int
-  isForTesting: Boolean
-  onlineProfileUrlTypes: MeetupGroupUpdateonlineProfileUrlTypesInput
-  admins: AdminAccountUpdateManyWithoutGroupInput
-  timeslotOptions: TimeslotUpdateManyInput
-  pools: MeetupPoolUpdateManyInput
-}
-
-input MeetupGroupUpsertNestedInput {
-  update: MeetupGroupUpdateDataInput!
-  create: MeetupGroupCreateInput!
-}
-
-input MeetupGroupUpsertWithoutAdminsInput {
-  update: MeetupGroupUpdateWithoutAdminsDataInput!
-  create: MeetupGroupCreateWithoutAdminsInput!
-}
-
-input MeetupGroupUpsertWithoutMembersInput {
-  update: MeetupGroupUpdateWithoutMembersDataInput!
-  create: MeetupGroupCreateWithoutMembersInput!
-}
-
-input MeetupGroupWhereInput {
+input ChartWhereInput {
   """Logical AND on all given filters."""
-  AND: [MeetupGroupWhereInput!]
+  AND: [ChartWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [MeetupGroupWhereInput!]
+  OR: [ChartWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [MeetupGroupWhereInput!]
+  NOT: [ChartWhereInput!]
   id: ID
 
   """All values that are not equal to given value."""
@@ -1365,6 +165,46 @@ input MeetupGroupWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  slug: String
+
+  """All values that are not equal to given value."""
+  slug_not: String
+
+  """All values that are contained in given list."""
+  slug_in: [String!]
+
+  """All values that are not contained in given list."""
+  slug_not_in: [String!]
+
+  """All values less than the given value."""
+  slug_lt: String
+
+  """All values less than or equal the given value."""
+  slug_lte: String
+
+  """All values greater than the given value."""
+  slug_gt: String
+
+  """All values greater than or equal the given value."""
+  slug_gte: String
+
+  """All values containing the given string."""
+  slug_contains: String
+
+  """All values not containing the given string."""
+  slug_not_contains: String
+
+  """All values starting with the given string."""
+  slug_starts_with: String
+
+  """All values not starting with the given string."""
+  slug_not_starts_with: String
+
+  """All values ending with the given string."""
+  slug_ends_with: String
+
+  """All values not ending with the given string."""
+  slug_not_ends_with: String
   name: String
 
   """All values that are not equal to given value."""
@@ -1405,121 +245,126 @@ input MeetupGroupWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
-  active: Boolean
+  yAxisName: String
 
   """All values that are not equal to given value."""
-  active_not: Boolean
-  minUsersToActivate: Int
-
-  """All values that are not equal to given value."""
-  minUsersToActivate_not: Int
+  yAxisName_not: String
 
   """All values that are contained in given list."""
-  minUsersToActivate_in: [Int!]
+  yAxisName_in: [String!]
 
   """All values that are not contained in given list."""
-  minUsersToActivate_not_in: [Int!]
+  yAxisName_not_in: [String!]
 
   """All values less than the given value."""
-  minUsersToActivate_lt: Int
+  yAxisName_lt: String
 
   """All values less than or equal the given value."""
-  minUsersToActivate_lte: Int
+  yAxisName_lte: String
 
   """All values greater than the given value."""
-  minUsersToActivate_gt: Int
+  yAxisName_gt: String
 
   """All values greater than or equal the given value."""
-  minUsersToActivate_gte: Int
-  isForTesting: Boolean
+  yAxisName_gte: String
 
-  """All values that are not equal to given value."""
-  isForTesting_not: Boolean
-  admins_every: AdminAccountWhereInput
-  admins_some: AdminAccountWhereInput
-  admins_none: AdminAccountWhereInput
-  members_every: MeetupAccountWhereInput
-  members_some: MeetupAccountWhereInput
-  members_none: MeetupAccountWhereInput
-  timeslotOptions_every: TimeslotWhereInput
-  timeslotOptions_some: TimeslotWhereInput
-  timeslotOptions_none: TimeslotWhereInput
-  pools_every: MeetupPoolWhereInput
-  pools_some: MeetupPoolWhereInput
-  pools_none: MeetupPoolWhereInput
+  """All values containing the given string."""
+  yAxisName_contains: String
+
+  """All values not containing the given string."""
+  yAxisName_not_contains: String
+
+  """All values starting with the given string."""
+  yAxisName_starts_with: String
+
+  """All values not starting with the given string."""
+  yAxisName_not_starts_with: String
+
+  """All values ending with the given string."""
+  yAxisName_ends_with: String
+
+  """All values not ending with the given string."""
+  yAxisName_not_ends_with: String
+  dataPoints_every: DataPointWhereInput
+  dataPoints_some: DataPointWhereInput
+  dataPoints_none: DataPointWhereInput
 }
 
-input MeetupGroupWhereUniqueInput {
+input ChartWhereUniqueInput {
   id: ID
+  slug: String
 }
 
-type MeetupPool implements Node {
+type DataPoint implements Node {
   id: ID!
-  members(where: MeetupAccountWhereInput, orderBy: MeetupAccountOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MeetupAccount!]
   dateTime: DateTime!
+  value: Float!
 }
 
 """A connection to a list of items."""
-type MeetupPoolConnection {
+type DataPointConnection {
   """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """A list of edges."""
-  edges: [MeetupPoolEdge]!
-  aggregate: AggregateMeetupPool!
+  edges: [DataPointEdge]!
+  aggregate: AggregateDataPoint!
 }
 
-input MeetupPoolCreateInput {
+input DataPointCreateInput {
   dateTime: DateTime!
-  members: MeetupAccountCreateManyInput
+  value: Float!
 }
 
-input MeetupPoolCreateManyInput {
-  create: [MeetupPoolCreateInput!]
-  connect: [MeetupPoolWhereUniqueInput!]
+input DataPointCreateManyInput {
+  create: [DataPointCreateInput!]
+  connect: [DataPointWhereUniqueInput!]
 }
 
 """An edge in a connection."""
-type MeetupPoolEdge {
+type DataPointEdge {
   """The item at the end of the edge."""
-  node: MeetupPool!
+  node: DataPoint!
 
   """A cursor for use in pagination."""
   cursor: String!
 }
 
-enum MeetupPoolOrderByInput {
+enum DataPointOrderByInput {
   id_ASC
   id_DESC
   dateTime_ASC
   dateTime_DESC
+  value_ASC
+  value_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
   createdAt_DESC
 }
 
-type MeetupPoolPreviousValues {
+type DataPointPreviousValues {
   id: ID!
   dateTime: DateTime!
+  value: Float!
 }
 
-type MeetupPoolSubscriptionPayload {
+type DataPointSubscriptionPayload {
   mutation: MutationType!
-  node: MeetupPool
+  node: DataPoint
   updatedFields: [String!]
-  previousValues: MeetupPoolPreviousValues
+  previousValues: DataPointPreviousValues
 }
 
-input MeetupPoolSubscriptionWhereInput {
+input DataPointSubscriptionWhereInput {
   """Logical AND on all given filters."""
-  AND: [MeetupPoolSubscriptionWhereInput!]
+  AND: [DataPointSubscriptionWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [MeetupPoolSubscriptionWhereInput!]
+  OR: [DataPointSubscriptionWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [MeetupPoolSubscriptionWhereInput!]
+  NOT: [DataPointSubscriptionWhereInput!]
 
   """
   The subscription event gets dispatched when it's listed in mutation_in
@@ -1540,48 +385,48 @@ input MeetupPoolSubscriptionWhereInput {
   The subscription event gets only dispatched when some of the field names included in this list have been updated
   """
   updatedFields_contains_some: [String!]
-  node: MeetupPoolWhereInput
+  node: DataPointWhereInput
 }
 
-input MeetupPoolUpdateDataInput {
+input DataPointUpdateDataInput {
   dateTime: DateTime
-  members: MeetupAccountUpdateManyInput
+  value: Float
 }
 
-input MeetupPoolUpdateInput {
+input DataPointUpdateInput {
   dateTime: DateTime
-  members: MeetupAccountUpdateManyInput
+  value: Float
 }
 
-input MeetupPoolUpdateManyInput {
-  create: [MeetupPoolCreateInput!]
-  connect: [MeetupPoolWhereUniqueInput!]
-  disconnect: [MeetupPoolWhereUniqueInput!]
-  delete: [MeetupPoolWhereUniqueInput!]
-  update: [MeetupPoolUpdateWithWhereUniqueNestedInput!]
-  upsert: [MeetupPoolUpsertWithWhereUniqueNestedInput!]
+input DataPointUpdateManyInput {
+  create: [DataPointCreateInput!]
+  connect: [DataPointWhereUniqueInput!]
+  disconnect: [DataPointWhereUniqueInput!]
+  delete: [DataPointWhereUniqueInput!]
+  update: [DataPointUpdateWithWhereUniqueNestedInput!]
+  upsert: [DataPointUpsertWithWhereUniqueNestedInput!]
 }
 
-input MeetupPoolUpdateWithWhereUniqueNestedInput {
-  where: MeetupPoolWhereUniqueInput!
-  data: MeetupPoolUpdateDataInput!
+input DataPointUpdateWithWhereUniqueNestedInput {
+  where: DataPointWhereUniqueInput!
+  data: DataPointUpdateDataInput!
 }
 
-input MeetupPoolUpsertWithWhereUniqueNestedInput {
-  where: MeetupPoolWhereUniqueInput!
-  update: MeetupPoolUpdateDataInput!
-  create: MeetupPoolCreateInput!
+input DataPointUpsertWithWhereUniqueNestedInput {
+  where: DataPointWhereUniqueInput!
+  update: DataPointUpdateDataInput!
+  create: DataPointCreateInput!
 }
 
-input MeetupPoolWhereInput {
+input DataPointWhereInput {
   """Logical AND on all given filters."""
-  AND: [MeetupPoolWhereInput!]
+  AND: [DataPointWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [MeetupPoolWhereInput!]
+  OR: [DataPointWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [MeetupPoolWhereInput!]
+  NOT: [DataPointWhereInput!]
   id: ID
 
   """All values that are not equal to given value."""
@@ -1644,73 +489,55 @@ input MeetupPoolWhereInput {
 
   """All values greater than or equal the given value."""
   dateTime_gte: DateTime
-  members_every: MeetupAccountWhereInput
-  members_some: MeetupAccountWhereInput
-  members_none: MeetupAccountWhereInput
+  value: Float
+
+  """All values that are not equal to given value."""
+  value_not: Float
+
+  """All values that are contained in given list."""
+  value_in: [Float!]
+
+  """All values that are not contained in given list."""
+  value_not_in: [Float!]
+
+  """All values less than the given value."""
+  value_lt: Float
+
+  """All values less than or equal the given value."""
+  value_lte: Float
+
+  """All values greater than the given value."""
+  value_gt: Float
+
+  """All values greater than or equal the given value."""
+  value_gte: Float
 }
 
-input MeetupPoolWhereUniqueInput {
+input DataPointWhereUniqueInput {
   id: ID
 }
 
+scalar DateTime
+
+"""
+The `Long` scalar type represents non-fractional signed whole numeric values.
+Long can represent values between -(2^63) and 2^63 - 1.
+"""
+scalar Long
+
 type Mutation {
-  createUser(data: UserCreateInput!): User!
-  createUnverifiedMeetupAccount(data: UnverifiedMeetupAccountCreateInput!): UnverifiedMeetupAccount!
-  createMeetupAccount(data: MeetupAccountCreateInput!): MeetupAccount!
-  createName(data: NameCreateInput!): Name!
-  createAdminAccount(data: AdminAccountCreateInput!): AdminAccount!
-  createMeetupGroup(data: MeetupGroupCreateInput!): MeetupGroup!
-  createMeetupPool(data: MeetupPoolCreateInput!): MeetupPool!
-  createMeeting(data: MeetingCreateInput!): Meeting!
-  createAttendance(data: AttendanceCreateInput!): Attendance!
-  createTimeslot(data: TimeslotCreateInput!): Timeslot!
-  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
-  updateUnverifiedMeetupAccount(data: UnverifiedMeetupAccountUpdateInput!, where: UnverifiedMeetupAccountWhereUniqueInput!): UnverifiedMeetupAccount
-  updateMeetupAccount(data: MeetupAccountUpdateInput!, where: MeetupAccountWhereUniqueInput!): MeetupAccount
-  updateAdminAccount(data: AdminAccountUpdateInput!, where: AdminAccountWhereUniqueInput!): AdminAccount
-  updateMeetupGroup(data: MeetupGroupUpdateInput!, where: MeetupGroupWhereUniqueInput!): MeetupGroup
-  updateMeetupPool(data: MeetupPoolUpdateInput!, where: MeetupPoolWhereUniqueInput!): MeetupPool
-  updateMeeting(data: MeetingUpdateInput!, where: MeetingWhereUniqueInput!): Meeting
-  updateAttendance(data: AttendanceUpdateInput!, where: AttendanceWhereUniqueInput!): Attendance
-  updateTimeslot(data: TimeslotUpdateInput!, where: TimeslotWhereUniqueInput!): Timeslot
-  deleteUser(where: UserWhereUniqueInput!): User
-  deleteUnverifiedMeetupAccount(where: UnverifiedMeetupAccountWhereUniqueInput!): UnverifiedMeetupAccount
-  deleteMeetupAccount(where: MeetupAccountWhereUniqueInput!): MeetupAccount
-  deleteAdminAccount(where: AdminAccountWhereUniqueInput!): AdminAccount
-  deleteMeetupGroup(where: MeetupGroupWhereUniqueInput!): MeetupGroup
-  deleteMeetupPool(where: MeetupPoolWhereUniqueInput!): MeetupPool
-  deleteMeeting(where: MeetingWhereUniqueInput!): Meeting
-  deleteAttendance(where: AttendanceWhereUniqueInput!): Attendance
-  deleteTimeslot(where: TimeslotWhereUniqueInput!): Timeslot
-  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
-  upsertUnverifiedMeetupAccount(where: UnverifiedMeetupAccountWhereUniqueInput!, create: UnverifiedMeetupAccountCreateInput!, update: UnverifiedMeetupAccountUpdateInput!): UnverifiedMeetupAccount!
-  upsertMeetupAccount(where: MeetupAccountWhereUniqueInput!, create: MeetupAccountCreateInput!, update: MeetupAccountUpdateInput!): MeetupAccount!
-  upsertAdminAccount(where: AdminAccountWhereUniqueInput!, create: AdminAccountCreateInput!, update: AdminAccountUpdateInput!): AdminAccount!
-  upsertMeetupGroup(where: MeetupGroupWhereUniqueInput!, create: MeetupGroupCreateInput!, update: MeetupGroupUpdateInput!): MeetupGroup!
-  upsertMeetupPool(where: MeetupPoolWhereUniqueInput!, create: MeetupPoolCreateInput!, update: MeetupPoolUpdateInput!): MeetupPool!
-  upsertMeeting(where: MeetingWhereUniqueInput!, create: MeetingCreateInput!, update: MeetingUpdateInput!): Meeting!
-  upsertAttendance(where: AttendanceWhereUniqueInput!, create: AttendanceCreateInput!, update: AttendanceUpdateInput!): Attendance!
-  upsertTimeslot(where: TimeslotWhereUniqueInput!, create: TimeslotCreateInput!, update: TimeslotUpdateInput!): Timeslot!
-  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
-  updateManyUnverifiedMeetupAccounts(data: UnverifiedMeetupAccountUpdateInput!, where: UnverifiedMeetupAccountWhereInput): BatchPayload!
-  updateManyMeetupAccounts(data: MeetupAccountUpdateInput!, where: MeetupAccountWhereInput): BatchPayload!
-  updateManyNames(data: NameUpdateInput!, where: NameWhereInput): BatchPayload!
-  updateManyAdminAccounts(data: AdminAccountUpdateInput!, where: AdminAccountWhereInput): BatchPayload!
-  updateManyMeetupGroups(data: MeetupGroupUpdateInput!, where: MeetupGroupWhereInput): BatchPayload!
-  updateManyMeetupPools(data: MeetupPoolUpdateInput!, where: MeetupPoolWhereInput): BatchPayload!
-  updateManyMeetings(data: MeetingUpdateInput!, where: MeetingWhereInput): BatchPayload!
-  updateManyAttendances(data: AttendanceUpdateInput!, where: AttendanceWhereInput): BatchPayload!
-  updateManyTimeslots(data: TimeslotUpdateInput!, where: TimeslotWhereInput): BatchPayload!
-  deleteManyUsers(where: UserWhereInput): BatchPayload!
-  deleteManyUnverifiedMeetupAccounts(where: UnverifiedMeetupAccountWhereInput): BatchPayload!
-  deleteManyMeetupAccounts(where: MeetupAccountWhereInput): BatchPayload!
-  deleteManyNames(where: NameWhereInput): BatchPayload!
-  deleteManyAdminAccounts(where: AdminAccountWhereInput): BatchPayload!
-  deleteManyMeetupGroups(where: MeetupGroupWhereInput): BatchPayload!
-  deleteManyMeetupPools(where: MeetupPoolWhereInput): BatchPayload!
-  deleteManyMeetings(where: MeetingWhereInput): BatchPayload!
-  deleteManyAttendances(where: AttendanceWhereInput): BatchPayload!
-  deleteManyTimeslots(where: TimeslotWhereInput): BatchPayload!
+  createChart(data: ChartCreateInput!): Chart!
+  createDataPoint(data: DataPointCreateInput!): DataPoint!
+  updateChart(data: ChartUpdateInput!, where: ChartWhereUniqueInput!): Chart
+  updateDataPoint(data: DataPointUpdateInput!, where: DataPointWhereUniqueInput!): DataPoint
+  deleteChart(where: ChartWhereUniqueInput!): Chart
+  deleteDataPoint(where: DataPointWhereUniqueInput!): DataPoint
+  upsertChart(where: ChartWhereUniqueInput!, create: ChartCreateInput!, update: ChartUpdateInput!): Chart!
+  upsertDataPoint(where: DataPointWhereUniqueInput!, create: DataPointCreateInput!, update: DataPointUpdateInput!): DataPoint!
+  updateManyCharts(data: ChartUpdateInput!, where: ChartWhereInput): BatchPayload!
+  updateManyDataPoints(data: DataPointUpdateInput!, where: DataPointWhereInput): BatchPayload!
+  deleteManyCharts(where: ChartWhereInput): BatchPayload!
+  deleteManyDataPoints(where: DataPointWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -1719,218 +546,10 @@ enum MutationType {
   DELETED
 }
 
-type Name {
-  firstName: String!
-  lastName: String!
-}
-
-"""A connection to a list of items."""
-type NameConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [NameEdge]!
-  aggregate: AggregateName!
-}
-
-input NameCreateInput {
-  firstName: String!
-  lastName: String!
-}
-
-input NameCreateOneInput {
-  create: NameCreateInput
-}
-
-"""An edge in a connection."""
-type NameEdge {
-  """The item at the end of the edge."""
-  node: Name!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum NameOrderByInput {
-  firstName_ASC
-  firstName_DESC
-  lastName_ASC
-  lastName_DESC
-  id_ASC
-  id_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-}
-
-type NamePreviousValues {
-  firstName: String!
-  lastName: String!
-}
-
-type NameSubscriptionPayload {
-  mutation: MutationType!
-  node: Name
-  updatedFields: [String!]
-  previousValues: NamePreviousValues
-}
-
-input NameSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [NameSubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [NameSubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [NameSubscriptionWhereInput!]
-
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: NameWhereInput
-}
-
-input NameUpdateDataInput {
-  firstName: String
-  lastName: String
-}
-
-input NameUpdateInput {
-  firstName: String
-  lastName: String
-}
-
-input NameUpdateOneInput {
-  create: NameCreateInput
-  disconnect: Boolean
-  delete: Boolean
-  update: NameUpdateDataInput
-  upsert: NameUpsertNestedInput
-}
-
-input NameUpsertNestedInput {
-  update: NameUpdateDataInput!
-  create: NameCreateInput!
-}
-
-input NameWhereInput {
-  """Logical AND on all given filters."""
-  AND: [NameWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [NameWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [NameWhereInput!]
-  firstName: String
-
-  """All values that are not equal to given value."""
-  firstName_not: String
-
-  """All values that are contained in given list."""
-  firstName_in: [String!]
-
-  """All values that are not contained in given list."""
-  firstName_not_in: [String!]
-
-  """All values less than the given value."""
-  firstName_lt: String
-
-  """All values less than or equal the given value."""
-  firstName_lte: String
-
-  """All values greater than the given value."""
-  firstName_gt: String
-
-  """All values greater than or equal the given value."""
-  firstName_gte: String
-
-  """All values containing the given string."""
-  firstName_contains: String
-
-  """All values not containing the given string."""
-  firstName_not_contains: String
-
-  """All values starting with the given string."""
-  firstName_starts_with: String
-
-  """All values not starting with the given string."""
-  firstName_not_starts_with: String
-
-  """All values ending with the given string."""
-  firstName_ends_with: String
-
-  """All values not ending with the given string."""
-  firstName_not_ends_with: String
-  lastName: String
-
-  """All values that are not equal to given value."""
-  lastName_not: String
-
-  """All values that are contained in given list."""
-  lastName_in: [String!]
-
-  """All values that are not contained in given list."""
-  lastName_not_in: [String!]
-
-  """All values less than the given value."""
-  lastName_lt: String
-
-  """All values less than or equal the given value."""
-  lastName_lte: String
-
-  """All values greater than the given value."""
-  lastName_gt: String
-
-  """All values greater than or equal the given value."""
-  lastName_gte: String
-
-  """All values containing the given string."""
-  lastName_contains: String
-
-  """All values not containing the given string."""
-  lastName_not_contains: String
-
-  """All values starting with the given string."""
-  lastName_starts_with: String
-
-  """All values not starting with the given string."""
-  lastName_not_starts_with: String
-
-  """All values ending with the given string."""
-  lastName_ends_with: String
-
-  """All values not ending with the given string."""
-  lastName_not_ends_with: String
-}
-
 """An object with an ID"""
 interface Node {
   """The id of the object."""
   id: ID!
-}
-
-enum OnlineProfileUrlType {
-  LINKEDIN
 }
 
 """Information about pagination in a connection."""
@@ -1949,35 +568,12 @@ type PageInfo {
 }
 
 type Query {
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
-  unverifiedMeetupAccounts(where: UnverifiedMeetupAccountWhereInput, orderBy: UnverifiedMeetupAccountOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UnverifiedMeetupAccount]!
-  meetupAccounts(where: MeetupAccountWhereInput, orderBy: MeetupAccountOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MeetupAccount]!
-  names(where: NameWhereInput, orderBy: NameOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Name]!
-  adminAccounts(where: AdminAccountWhereInput, orderBy: AdminAccountOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [AdminAccount]!
-  meetupGroups(where: MeetupGroupWhereInput, orderBy: MeetupGroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MeetupGroup]!
-  meetupPools(where: MeetupPoolWhereInput, orderBy: MeetupPoolOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MeetupPool]!
-  meetings(where: MeetingWhereInput, orderBy: MeetingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Meeting]!
-  attendances(where: AttendanceWhereInput, orderBy: AttendanceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Attendance]!
-  timeslots(where: TimeslotWhereInput, orderBy: TimeslotOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Timeslot]!
-  user(where: UserWhereUniqueInput!): User
-  unverifiedMeetupAccount(where: UnverifiedMeetupAccountWhereUniqueInput!): UnverifiedMeetupAccount
-  meetupAccount(where: MeetupAccountWhereUniqueInput!): MeetupAccount
-  adminAccount(where: AdminAccountWhereUniqueInput!): AdminAccount
-  meetupGroup(where: MeetupGroupWhereUniqueInput!): MeetupGroup
-  meetupPool(where: MeetupPoolWhereUniqueInput!): MeetupPool
-  meeting(where: MeetingWhereUniqueInput!): Meeting
-  attendance(where: AttendanceWhereUniqueInput!): Attendance
-  timeslot(where: TimeslotWhereUniqueInput!): Timeslot
-  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
-  unverifiedMeetupAccountsConnection(where: UnverifiedMeetupAccountWhereInput, orderBy: UnverifiedMeetupAccountOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UnverifiedMeetupAccountConnection!
-  meetupAccountsConnection(where: MeetupAccountWhereInput, orderBy: MeetupAccountOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MeetupAccountConnection!
-  namesConnection(where: NameWhereInput, orderBy: NameOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): NameConnection!
-  adminAccountsConnection(where: AdminAccountWhereInput, orderBy: AdminAccountOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AdminAccountConnection!
-  meetupGroupsConnection(where: MeetupGroupWhereInput, orderBy: MeetupGroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MeetupGroupConnection!
-  meetupPoolsConnection(where: MeetupPoolWhereInput, orderBy: MeetupPoolOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MeetupPoolConnection!
-  meetingsConnection(where: MeetingWhereInput, orderBy: MeetingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MeetingConnection!
-  attendancesConnection(where: AttendanceWhereInput, orderBy: AttendanceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AttendanceConnection!
-  timeslotsConnection(where: TimeslotWhereInput, orderBy: TimeslotOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TimeslotConnection!
+  charts(where: ChartWhereInput, orderBy: ChartOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Chart]!
+  dataPoints(where: DataPointWhereInput, orderBy: DataPointOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DataPoint]!
+  chart(where: ChartWhereUniqueInput!): Chart
+  dataPoint(where: DataPointWhereUniqueInput!): DataPoint
+  chartsConnection(where: ChartWhereInput, orderBy: ChartOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ChartConnection!
+  dataPointsConnection(where: DataPointWhereInput, orderBy: DataPointOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DataPointConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -1987,865 +583,6 @@ type Query {
 }
 
 type Subscription {
-  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
-  unverifiedMeetupAccount(where: UnverifiedMeetupAccountSubscriptionWhereInput): UnverifiedMeetupAccountSubscriptionPayload
-  meetupAccount(where: MeetupAccountSubscriptionWhereInput): MeetupAccountSubscriptionPayload
-  name(where: NameSubscriptionWhereInput): NameSubscriptionPayload
-  adminAccount(where: AdminAccountSubscriptionWhereInput): AdminAccountSubscriptionPayload
-  meetupGroup(where: MeetupGroupSubscriptionWhereInput): MeetupGroupSubscriptionPayload
-  meetupPool(where: MeetupPoolSubscriptionWhereInput): MeetupPoolSubscriptionPayload
-  meeting(where: MeetingSubscriptionWhereInput): MeetingSubscriptionPayload
-  attendance(where: AttendanceSubscriptionWhereInput): AttendanceSubscriptionPayload
-  timeslot(where: TimeslotSubscriptionWhereInput): TimeslotSubscriptionPayload
-}
-
-type Timeslot implements Node {
-  id: ID!
-  dayOfWeek: DayOfWeek!
-  hour: Int!
-  minute: Int!
-}
-
-"""A connection to a list of items."""
-type TimeslotConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [TimeslotEdge]!
-  aggregate: AggregateTimeslot!
-}
-
-input TimeslotCreateInput {
-  dayOfWeek: DayOfWeek!
-  hour: Int!
-  minute: Int!
-}
-
-input TimeslotCreateManyInput {
-  create: [TimeslotCreateInput!]
-  connect: [TimeslotWhereUniqueInput!]
-}
-
-"""An edge in a connection."""
-type TimeslotEdge {
-  """The item at the end of the edge."""
-  node: Timeslot!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum TimeslotOrderByInput {
-  id_ASC
-  id_DESC
-  dayOfWeek_ASC
-  dayOfWeek_DESC
-  hour_ASC
-  hour_DESC
-  minute_ASC
-  minute_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-}
-
-type TimeslotPreviousValues {
-  id: ID!
-  dayOfWeek: DayOfWeek!
-  hour: Int!
-  minute: Int!
-}
-
-type TimeslotSubscriptionPayload {
-  mutation: MutationType!
-  node: Timeslot
-  updatedFields: [String!]
-  previousValues: TimeslotPreviousValues
-}
-
-input TimeslotSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [TimeslotSubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [TimeslotSubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [TimeslotSubscriptionWhereInput!]
-
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: TimeslotWhereInput
-}
-
-input TimeslotUpdateDataInput {
-  dayOfWeek: DayOfWeek
-  hour: Int
-  minute: Int
-}
-
-input TimeslotUpdateInput {
-  dayOfWeek: DayOfWeek
-  hour: Int
-  minute: Int
-}
-
-input TimeslotUpdateManyInput {
-  create: [TimeslotCreateInput!]
-  connect: [TimeslotWhereUniqueInput!]
-  disconnect: [TimeslotWhereUniqueInput!]
-  delete: [TimeslotWhereUniqueInput!]
-  update: [TimeslotUpdateWithWhereUniqueNestedInput!]
-  upsert: [TimeslotUpsertWithWhereUniqueNestedInput!]
-}
-
-input TimeslotUpdateWithWhereUniqueNestedInput {
-  where: TimeslotWhereUniqueInput!
-  data: TimeslotUpdateDataInput!
-}
-
-input TimeslotUpsertWithWhereUniqueNestedInput {
-  where: TimeslotWhereUniqueInput!
-  update: TimeslotUpdateDataInput!
-  create: TimeslotCreateInput!
-}
-
-input TimeslotWhereInput {
-  """Logical AND on all given filters."""
-  AND: [TimeslotWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [TimeslotWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [TimeslotWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  dayOfWeek: DayOfWeek
-
-  """All values that are not equal to given value."""
-  dayOfWeek_not: DayOfWeek
-
-  """All values that are contained in given list."""
-  dayOfWeek_in: [DayOfWeek!]
-
-  """All values that are not contained in given list."""
-  dayOfWeek_not_in: [DayOfWeek!]
-  hour: Int
-
-  """All values that are not equal to given value."""
-  hour_not: Int
-
-  """All values that are contained in given list."""
-  hour_in: [Int!]
-
-  """All values that are not contained in given list."""
-  hour_not_in: [Int!]
-
-  """All values less than the given value."""
-  hour_lt: Int
-
-  """All values less than or equal the given value."""
-  hour_lte: Int
-
-  """All values greater than the given value."""
-  hour_gt: Int
-
-  """All values greater than or equal the given value."""
-  hour_gte: Int
-  minute: Int
-
-  """All values that are not equal to given value."""
-  minute_not: Int
-
-  """All values that are contained in given list."""
-  minute_in: [Int!]
-
-  """All values that are not contained in given list."""
-  minute_not_in: [Int!]
-
-  """All values less than the given value."""
-  minute_lt: Int
-
-  """All values less than or equal the given value."""
-  minute_lte: Int
-
-  """All values greater than the given value."""
-  minute_gt: Int
-
-  """All values greater than or equal the given value."""
-  minute_gte: Int
-}
-
-input TimeslotWhereUniqueInput {
-  id: ID
-}
-
-type UnverifiedMeetupAccount implements Node {
-  id: ID!
-  user(where: UserWhereInput): User!
-  meetupGroup(where: MeetupGroupWhereInput): MeetupGroup!
-  onlineProfileUrl: String
-}
-
-"""A connection to a list of items."""
-type UnverifiedMeetupAccountConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [UnverifiedMeetupAccountEdge]!
-  aggregate: AggregateUnverifiedMeetupAccount!
-}
-
-input UnverifiedMeetupAccountCreateInput {
-  onlineProfileUrl: String
-  user: UserCreateOneInput!
-  meetupGroup: MeetupGroupCreateOneInput!
-}
-
-"""An edge in a connection."""
-type UnverifiedMeetupAccountEdge {
-  """The item at the end of the edge."""
-  node: UnverifiedMeetupAccount!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum UnverifiedMeetupAccountOrderByInput {
-  id_ASC
-  id_DESC
-  onlineProfileUrl_ASC
-  onlineProfileUrl_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-}
-
-type UnverifiedMeetupAccountPreviousValues {
-  id: ID!
-  onlineProfileUrl: String
-}
-
-type UnverifiedMeetupAccountSubscriptionPayload {
-  mutation: MutationType!
-  node: UnverifiedMeetupAccount
-  updatedFields: [String!]
-  previousValues: UnverifiedMeetupAccountPreviousValues
-}
-
-input UnverifiedMeetupAccountSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [UnverifiedMeetupAccountSubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [UnverifiedMeetupAccountSubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [UnverifiedMeetupAccountSubscriptionWhereInput!]
-
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: UnverifiedMeetupAccountWhereInput
-}
-
-input UnverifiedMeetupAccountUpdateInput {
-  onlineProfileUrl: String
-  user: UserUpdateOneInput
-  meetupGroup: MeetupGroupUpdateOneInput
-}
-
-input UnverifiedMeetupAccountWhereInput {
-  """Logical AND on all given filters."""
-  AND: [UnverifiedMeetupAccountWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [UnverifiedMeetupAccountWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [UnverifiedMeetupAccountWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  onlineProfileUrl: String
-
-  """All values that are not equal to given value."""
-  onlineProfileUrl_not: String
-
-  """All values that are contained in given list."""
-  onlineProfileUrl_in: [String!]
-
-  """All values that are not contained in given list."""
-  onlineProfileUrl_not_in: [String!]
-
-  """All values less than the given value."""
-  onlineProfileUrl_lt: String
-
-  """All values less than or equal the given value."""
-  onlineProfileUrl_lte: String
-
-  """All values greater than the given value."""
-  onlineProfileUrl_gt: String
-
-  """All values greater than or equal the given value."""
-  onlineProfileUrl_gte: String
-
-  """All values containing the given string."""
-  onlineProfileUrl_contains: String
-
-  """All values not containing the given string."""
-  onlineProfileUrl_not_contains: String
-
-  """All values starting with the given string."""
-  onlineProfileUrl_starts_with: String
-
-  """All values not starting with the given string."""
-  onlineProfileUrl_not_starts_with: String
-
-  """All values ending with the given string."""
-  onlineProfileUrl_ends_with: String
-
-  """All values not ending with the given string."""
-  onlineProfileUrl_not_ends_with: String
-  user: UserWhereInput
-  meetupGroup: MeetupGroupWhereInput
-}
-
-input UnverifiedMeetupAccountWhereUniqueInput {
-  id: ID
-}
-
-type User implements Node {
-  id: ID!
-  email: String!
-  password: String!
-  emailConfirmationToken: String
-  meetupAccounts(where: MeetupAccountWhereInput, orderBy: MeetupAccountOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MeetupAccount!]
-  adminAccounts(where: AdminAccountWhereInput, orderBy: AdminAccountOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [AdminAccount!]
-  isEmailConfirmed: Boolean
-  isForTesting: Boolean!
-  isSuperAdmin: Boolean
-}
-
-"""A connection to a list of items."""
-type UserConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [UserEdge]!
-  aggregate: AggregateUser!
-}
-
-input UserCreateInput {
-  email: String!
-  password: String!
-  emailConfirmationToken: String
-  isEmailConfirmed: Boolean
-  isForTesting: Boolean!
-  isSuperAdmin: Boolean
-  meetupAccounts: MeetupAccountCreateManyWithoutUserInput
-  adminAccounts: AdminAccountCreateManyWithoutUserInput
-}
-
-input UserCreateOneInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
-}
-
-input UserCreateOneWithoutAdminAccountsInput {
-  create: UserCreateWithoutAdminAccountsInput
-  connect: UserWhereUniqueInput
-}
-
-input UserCreateOneWithoutMeetupAccountsInput {
-  create: UserCreateWithoutMeetupAccountsInput
-  connect: UserWhereUniqueInput
-}
-
-input UserCreateWithoutAdminAccountsInput {
-  email: String!
-  password: String!
-  emailConfirmationToken: String
-  isEmailConfirmed: Boolean
-  isForTesting: Boolean!
-  isSuperAdmin: Boolean
-  meetupAccounts: MeetupAccountCreateManyWithoutUserInput
-}
-
-input UserCreateWithoutMeetupAccountsInput {
-  email: String!
-  password: String!
-  emailConfirmationToken: String
-  isEmailConfirmed: Boolean
-  isForTesting: Boolean!
-  isSuperAdmin: Boolean
-  adminAccounts: AdminAccountCreateManyWithoutUserInput
-}
-
-"""An edge in a connection."""
-type UserEdge {
-  """The item at the end of the edge."""
-  node: User!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum UserOrderByInput {
-  id_ASC
-  id_DESC
-  email_ASC
-  email_DESC
-  password_ASC
-  password_DESC
-  emailConfirmationToken_ASC
-  emailConfirmationToken_DESC
-  isEmailConfirmed_ASC
-  isEmailConfirmed_DESC
-  isForTesting_ASC
-  isForTesting_DESC
-  isSuperAdmin_ASC
-  isSuperAdmin_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-}
-
-type UserPreviousValues {
-  id: ID!
-  email: String!
-  password: String!
-  emailConfirmationToken: String
-  isEmailConfirmed: Boolean
-  isForTesting: Boolean!
-  isSuperAdmin: Boolean
-}
-
-type UserSubscriptionPayload {
-  mutation: MutationType!
-  node: User
-  updatedFields: [String!]
-  previousValues: UserPreviousValues
-}
-
-input UserSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [UserSubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [UserSubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [UserSubscriptionWhereInput!]
-
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: UserWhereInput
-}
-
-input UserUpdateDataInput {
-  email: String
-  password: String
-  emailConfirmationToken: String
-  isEmailConfirmed: Boolean
-  isForTesting: Boolean
-  isSuperAdmin: Boolean
-  meetupAccounts: MeetupAccountUpdateManyWithoutUserInput
-  adminAccounts: AdminAccountUpdateManyWithoutUserInput
-}
-
-input UserUpdateInput {
-  email: String
-  password: String
-  emailConfirmationToken: String
-  isEmailConfirmed: Boolean
-  isForTesting: Boolean
-  isSuperAdmin: Boolean
-  meetupAccounts: MeetupAccountUpdateManyWithoutUserInput
-  adminAccounts: AdminAccountUpdateManyWithoutUserInput
-}
-
-input UserUpdateOneInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
-  delete: Boolean
-  update: UserUpdateDataInput
-  upsert: UserUpsertNestedInput
-}
-
-input UserUpdateOneWithoutAdminAccountsInput {
-  create: UserCreateWithoutAdminAccountsInput
-  connect: UserWhereUniqueInput
-  delete: Boolean
-  update: UserUpdateWithoutAdminAccountsDataInput
-  upsert: UserUpsertWithoutAdminAccountsInput
-}
-
-input UserUpdateOneWithoutMeetupAccountsInput {
-  create: UserCreateWithoutMeetupAccountsInput
-  connect: UserWhereUniqueInput
-  delete: Boolean
-  update: UserUpdateWithoutMeetupAccountsDataInput
-  upsert: UserUpsertWithoutMeetupAccountsInput
-}
-
-input UserUpdateWithoutAdminAccountsDataInput {
-  email: String
-  password: String
-  emailConfirmationToken: String
-  isEmailConfirmed: Boolean
-  isForTesting: Boolean
-  isSuperAdmin: Boolean
-  meetupAccounts: MeetupAccountUpdateManyWithoutUserInput
-}
-
-input UserUpdateWithoutMeetupAccountsDataInput {
-  email: String
-  password: String
-  emailConfirmationToken: String
-  isEmailConfirmed: Boolean
-  isForTesting: Boolean
-  isSuperAdmin: Boolean
-  adminAccounts: AdminAccountUpdateManyWithoutUserInput
-}
-
-input UserUpsertNestedInput {
-  update: UserUpdateDataInput!
-  create: UserCreateInput!
-}
-
-input UserUpsertWithoutAdminAccountsInput {
-  update: UserUpdateWithoutAdminAccountsDataInput!
-  create: UserCreateWithoutAdminAccountsInput!
-}
-
-input UserUpsertWithoutMeetupAccountsInput {
-  update: UserUpdateWithoutMeetupAccountsDataInput!
-  create: UserCreateWithoutMeetupAccountsInput!
-}
-
-input UserWhereInput {
-  """Logical AND on all given filters."""
-  AND: [UserWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [UserWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [UserWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  email: String
-
-  """All values that are not equal to given value."""
-  email_not: String
-
-  """All values that are contained in given list."""
-  email_in: [String!]
-
-  """All values that are not contained in given list."""
-  email_not_in: [String!]
-
-  """All values less than the given value."""
-  email_lt: String
-
-  """All values less than or equal the given value."""
-  email_lte: String
-
-  """All values greater than the given value."""
-  email_gt: String
-
-  """All values greater than or equal the given value."""
-  email_gte: String
-
-  """All values containing the given string."""
-  email_contains: String
-
-  """All values not containing the given string."""
-  email_not_contains: String
-
-  """All values starting with the given string."""
-  email_starts_with: String
-
-  """All values not starting with the given string."""
-  email_not_starts_with: String
-
-  """All values ending with the given string."""
-  email_ends_with: String
-
-  """All values not ending with the given string."""
-  email_not_ends_with: String
-  password: String
-
-  """All values that are not equal to given value."""
-  password_not: String
-
-  """All values that are contained in given list."""
-  password_in: [String!]
-
-  """All values that are not contained in given list."""
-  password_not_in: [String!]
-
-  """All values less than the given value."""
-  password_lt: String
-
-  """All values less than or equal the given value."""
-  password_lte: String
-
-  """All values greater than the given value."""
-  password_gt: String
-
-  """All values greater than or equal the given value."""
-  password_gte: String
-
-  """All values containing the given string."""
-  password_contains: String
-
-  """All values not containing the given string."""
-  password_not_contains: String
-
-  """All values starting with the given string."""
-  password_starts_with: String
-
-  """All values not starting with the given string."""
-  password_not_starts_with: String
-
-  """All values ending with the given string."""
-  password_ends_with: String
-
-  """All values not ending with the given string."""
-  password_not_ends_with: String
-  emailConfirmationToken: String
-
-  """All values that are not equal to given value."""
-  emailConfirmationToken_not: String
-
-  """All values that are contained in given list."""
-  emailConfirmationToken_in: [String!]
-
-  """All values that are not contained in given list."""
-  emailConfirmationToken_not_in: [String!]
-
-  """All values less than the given value."""
-  emailConfirmationToken_lt: String
-
-  """All values less than or equal the given value."""
-  emailConfirmationToken_lte: String
-
-  """All values greater than the given value."""
-  emailConfirmationToken_gt: String
-
-  """All values greater than or equal the given value."""
-  emailConfirmationToken_gte: String
-
-  """All values containing the given string."""
-  emailConfirmationToken_contains: String
-
-  """All values not containing the given string."""
-  emailConfirmationToken_not_contains: String
-
-  """All values starting with the given string."""
-  emailConfirmationToken_starts_with: String
-
-  """All values not starting with the given string."""
-  emailConfirmationToken_not_starts_with: String
-
-  """All values ending with the given string."""
-  emailConfirmationToken_ends_with: String
-
-  """All values not ending with the given string."""
-  emailConfirmationToken_not_ends_with: String
-  isEmailConfirmed: Boolean
-
-  """All values that are not equal to given value."""
-  isEmailConfirmed_not: Boolean
-  isForTesting: Boolean
-
-  """All values that are not equal to given value."""
-  isForTesting_not: Boolean
-  isSuperAdmin: Boolean
-
-  """All values that are not equal to given value."""
-  isSuperAdmin_not: Boolean
-  meetupAccounts_every: MeetupAccountWhereInput
-  meetupAccounts_some: MeetupAccountWhereInput
-  meetupAccounts_none: MeetupAccountWhereInput
-  adminAccounts_every: AdminAccountWhereInput
-  adminAccounts_some: AdminAccountWhereInput
-  adminAccounts_none: AdminAccountWhereInput
-}
-
-input UserWhereUniqueInput {
-  id: ID
-  email: String
+  chart(where: ChartSubscriptionWhereInput): ChartSubscriptionPayload
+  dataPoint(where: DataPointSubscriptionWhereInput): DataPointSubscriptionPayload
 }

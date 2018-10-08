@@ -42,22 +42,17 @@ describe('ChartCat GraphQL server', async () => {
 
   test('It allows anyone to create a chart', async (done) => {
     const res = await sendGQLQuery(`
-      mutation() {
+      mutation {
         createChart {
-          chart {
-            slug
-            url
-          }
+          slug
         }
       }
     `, {
+      /* No variables */
     }, {
       data: {
         createChart: {
-          chart: {
-            slug: expect.stringMatching(/.+/),
-            url: expect.stringMatching(/.+/),
-          }
+          slug: expect.stringMatching(/.+/),
         }
       },
     });
@@ -69,11 +64,8 @@ describe('ChartCat GraphQL server', async () => {
     await sendGQLQuery(`
       mutation($chartSlug: String!, $chartName: String!) {
         renameChart(chartSlug: $chartSlug, chartName: $chartName) {
-          chart {
-            slug
-            url
-            name
-          }
+          slug
+          name
         }
       }
     `, {
@@ -82,11 +74,8 @@ describe('ChartCat GraphQL server', async () => {
     }, {
       data: {
         renameChart: {
-          chart: {
-            slug: expect.stringMatching(/.+/),
-            url: expect.stringMatching(/.+/),
-            name: expect.stringMatching('FE Build Size'),
-          }
+          slug: expect.stringMatching(/.+/),
+          name: expect.stringMatching('FE Build Size'),
         }
       },
     });
@@ -95,37 +84,31 @@ describe('ChartCat GraphQL server', async () => {
 
   test('It allows anyone to add data to a chart', async (done) => {
     await sendGQLQuery(`
-      mutation($chartSlug: String!, value: Number!, dateTime: String) {
+      mutation($chartSlug: String!, $value: Float!, $dateTime: DateTime!) {
         addDataToChart(chartSlug: $chartSlug, value: $value, dateTime: $dateTime) {
-          chart {
-            slug
-            url
-            name
-            dataPoints {
-              dateTime
-              value
-            }
+          slug
+          name
+          dataPoints {
+            dateTime
+            value
           }
         }
       }
     `, {
       chartSlug: testChartSlug,
       value: 10,
-      dateTime: '2018-08-30T12:00:00Z',
+      dateTime: '2018-08-30T12:00:00.000Z',
     }, {
       data: {
         addDataToChart: {
-          chart: {
-            slug: expect.stringMatching(/.+/),
-            url: expect.stringMatching(/.+/),
-            name: expect.stringMatching(/.+/),
-            dataPoints: [
-              {
-                dateTime: '2018-08-30T12:00:00Z',
-                value: 10,
-              }
-            ]
-          }
+          slug: expect.stringMatching(/.+/),
+          name: expect.stringMatching(/.+/),
+          dataPoints: [
+            {
+              dateTime: '2018-08-30T12:00:00.000Z',
+              value: 10,
+            }
+          ]
         }
       },
     });
@@ -137,7 +120,6 @@ describe('ChartCat GraphQL server', async () => {
       query($chartSlug: String!) {
         chart(chartSlug: $chartSlug) {
           slug
-          url
           name
           dataPoints {
             dateTime
@@ -151,40 +133,15 @@ describe('ChartCat GraphQL server', async () => {
       data: {
         chart: {
           slug: expect.stringMatching(/.+/),
-          url: expect.stringMatching(/.+/),
           name: expect.stringMatching(/.+/),
           dataPoints: [
             {
-              dateTime: '2018-08-30T12:00:00Z',
+              dateTime: '2018-08-30T12:00:00.000Z',
               value: 10,
             }
           ]
         }
       },
-    });
-    done();
-  });
-
-  test('It throws an error if a chart cannot be found for the given slug', async (done) => {
-    await sendGQLQuery(`
-      query($chartSlug: String!) {
-        chart(chartSlug: $chartSlug) {
-          slug
-          url
-          name
-          dataPoints {
-            dateTime
-            value
-          }
-        }
-      }
-    `, {
-      chartSlug: 'INVALID-SLUG',
-    }, {
-      data: null,
-      errors: [{
-        message: expect.stringMatching(/.+/),
-      }],
     });
     done();
   });

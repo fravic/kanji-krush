@@ -3,7 +3,7 @@ type Chart {
   slug: String! @unique
   name: String
   yAxisName: String
-  dataPoints: [DataPoint]
+  dataPoints: [DataPoint!]!
 }
 
 type DataPoint {

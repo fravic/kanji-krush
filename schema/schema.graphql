@@ -1,58 +1,13 @@
-#import User from './prisma.graphql'
+# Unlike the auto-generated schema in 'prisma.graphql', these are manually-written to match the fe resolvers.
+
+#import Chart from './prisma.graphql'
 
 type Query {
-  user(id: ID!): User
+  chart(chartSlug: String!): Chart
 }
 
 type Mutation {
-  attemptCreateMeetupAccount(email: String!, meetupGroupId: ID!, onlineProfileUrl: String, isForTesting: Boolean!): AttemptCreateMeetupAccountPayload!
-  confirmEmail(emailConfirmationToken: String): UserPayload!
-  verifyMeetupAccount(unverifiedMeetupAccountId: ID!): MeetupAccountPayload
-  createMeetupGroup(data: CreateMeetupGroupInput!): MeetupGroupPayload!
-  login(email: String!, password: String!): AuthPayload!
-  signup(email: String!, isForTesting: Boolean!): AuthPayload!
-}
-
-input SignupInput {
-  email: String!
-}
-
-type AttemptCreateMeetupAccountPayload {
-  createdMeetupAccount: MeetupAccountPayload
-  createdUnverifiedMeetupAccount: UnverifiedMeetupAccountPayload
-}
-
-type AuthPayload {
-  user: UserPayload!
-  token: String!
-}
-
-type UserPayload {
-  id: ID!
-  isEmailConfirmed: Boolean!
-  isForTesting: Boolean!
-}
-
-input CreateMeetupGroupInput {
-  name: String!
-  active: Boolean
-  minUsersToActivate: Int!
-  isForTesting: Boolean!
-  onlineProfileUrlTypes: [OnlineProfileUrlType!]!
-}
-
-type MeetupGroupPayload {
-  id: ID!
-  name: String!
-  onlineProfileUrlTypes: [OnlineProfileUrlType!]!
-}
-
-type MeetupAccountPayload {
-  id: ID!
-  onlineProfileUrl: String
-}
-
-type UnverifiedMeetupAccountPayload {
-  id: ID!
-  onlineProfileUrl: String
+  addDataToChart(chartSlug: String!, value: Float!, dateTime: DateTime!): Chart
+  createChart: Chart
+  renameChart(chartSlug: String!, chartName: String!): Chart
 }
