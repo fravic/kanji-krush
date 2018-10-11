@@ -1,7 +1,7 @@
-@import "scss/variables.scss";
+@import "./variables.scss";
 
 :global {
-  @import "scss/reset.scss";
+  @import "./reset.scss";
 
   /* Set root font sizes */
   html {

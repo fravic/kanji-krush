@@ -1,0 +1,11 @@
+#import Chart from './types.graphql'
+
+type Query {
+  chart(chartSlug: String!): Chart
+}
+
+type Mutation {
+  addDataToChart(chartSlug: String!, value: Float!, dateTime: String!): Chart
+  createChart: Chart
+  renameChart(chartSlug: String!, chartName: String!): Chart
+}

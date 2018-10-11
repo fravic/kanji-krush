@@ -1,8 +1,0 @@
-package-lock.json
-node_modules
-.idea
-.vscode
-*.log
-.next
-.env
-.env.prod

@@ -1,0 +1,17 @@
+interface Node {
+  id: ID!
+}
+
+type Chart implements Node {
+  id: ID!
+  slug: String!
+  name: String
+  yAxisName: String
+  dataPoints: [DataPoint!]
+}
+
+type DataPoint implements Node {
+  id: ID!
+  dateTime: String!
+  value: Float!
+}

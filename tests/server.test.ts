@@ -3,11 +3,7 @@ import * as Http from 'http';
 import * as Https from 'https';
 import * as request from 'supertest';
 
-import app, { prisma } from './graphqlTestServer';
-import { Prisma } from '../../schema/prisma';
-
-// Force cast prisma to use our generated types
-const db = ((prisma as any) as Prisma);
+import app from './graphqlTestServer';
 
 describe('ChartCat GraphQL server', async () => {
 
@@ -17,10 +13,8 @@ describe('ChartCat GraphQL server', async () => {
   let testChartSlug: string;
 
   beforeAll(async () => {
-    server = await app.start({
-      endpoint: '/graphql',
-    });
   });
+
   afterAll(async () => {
     await server.close();
     // Wait 1 second for server to terminate
@@ -28,7 +22,7 @@ describe('ChartCat GraphQL server', async () => {
   });
 
   const sendGQLQuery = async (query, variables, expectedResponse, authToken = null, expectedStatusCode = 200) => {
-    const req = request(app.express)
+    const req = request(app)
       .post('/graphql')
       .type('json');
     if (authToken) {

@@ -1,1 +1,8 @@
 .vscode
+package-lock.json
+node_modules
+.idea
+*.log
+.next
+.env
+.env.prod
