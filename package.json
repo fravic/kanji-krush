@@ -8,7 +8,8 @@
     "build": "next build src",
     "start": "NODE_ENV=production ts-node server.ts",
     "test": "dotenv -- jest",
-    "debug": "dotenv -- ts-node --inspect server.ts"
+    "debug": "dotenv -- ts-node --inspect server.ts",
+    "generate-types:be": "graphql-schema-typescript generate-ts ./be/schema/ --output be/schema/graphqlTypes.d.ts"
   },
   "engines": {
     "node": ">=10 <11"
@@ -21,11 +22,13 @@
     "@types/uuid": "3.4.3",
     "@zeit/next-sass": "1.0.1",
     "@zeit/next-typescript": "1.1.1",
+    "apollo": "1.9.2",
     "apollo-link-http": "1.5.4",
     "apollo-server-express": "2.1.0",
     "dotenv-cli": "1.4.0",
     "express": "4.16.4",
     "graphql-import": "0.7.1",
+    "graphql-schema-typescript": "1.2.7",
     "next": "7.0.1",
     "next-apollo": "2.0.0",
     "node-sass": "4.9.2",
@@ -33,7 +36,9 @@
     "react": "16.4.1",
     "react-apollo": "2.1.9",
     "react-dom": "16.4.1",
+    "reflect-metadata": "0.1.12",
     "ts-node": "7.0.0",
+    "typeorm": "0.2.7",
     "typescript": "2.9.2"
   },
   "devDependencies": {

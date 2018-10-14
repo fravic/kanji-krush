@@ -1,9 +1,9 @@
+import { Chart } from '../entities/Chart';
 import { Context } from '../types';
 
 export const Query = {
-  chart: (_, args, ctx: Context, info) => {
-    return {
-      id: 'abc',
-    };
+  chart: async (_, args, ctx: Context) => {
+    const chartRepo = ctx.db.getRepository(Chart);
+    return await chartRepo.findOne({ slug: args.chartSlug }, { relations: ["dataPoints"] });
   },
 };

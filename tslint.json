@@ -5,6 +5,7 @@
   ],
   "jsRules": {},
   "rules": {
+    "arrow-parens": false,
     "interface-name": false,
     "ordered-imports": true,
     "quotemark": false

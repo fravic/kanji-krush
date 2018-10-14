@@ -1,28 +1,38 @@
 /* tslint:disable */
-import * as Http from 'http';
-import * as Https from 'https';
+/**
+ * GraphQL server tests
+ * Runs against the database specified in process.env.TESTPGDATABASE
+ */
+// tslint:disable:no-console
+
+import { Express } from 'express';
 import * as request from 'supertest';
 
-import app from './graphqlTestServer';
+import { startServer } from '../server';
 
 describe('ChartCat GraphQL server', async () => {
 
   const timeout = ms => new Promise(res => setTimeout(res, ms))
 
-  let server: Http.Server | Https.Server;
+  let server: Express;
   let testChartSlug: string;
 
   beforeAll(async () => {
+    console.log('Starting app server...');
+    server = await startServer({
+      backendOnly: true,
+      database: process.env.TESTPGDATABASE,
+    });
   });
 
   afterAll(async () => {
-    await server.close();
     // Wait 1 second for server to terminate
     await timeout(1000);
+    console.log('Done!');
   });
 
   const sendGQLQuery = async (query, variables, expectedResponse, authToken = null, expectedStatusCode = 200) => {
-    const req = request(app)
+    const req = request(server)
       .post('/graphql')
       .type('json');
     if (authToken) {
@@ -78,7 +88,7 @@ describe('ChartCat GraphQL server', async () => {
 
   test('It allows anyone to add data to a chart', async (done) => {
     await sendGQLQuery(`
-      mutation($chartSlug: String!, $value: Float!, $dateTime: DateTime!) {
+      mutation($chartSlug: String!, $value: Float!, $dateTime: String!) {
         addDataToChart(chartSlug: $chartSlug, value: $value, dateTime: $dateTime) {
           slug
           name
