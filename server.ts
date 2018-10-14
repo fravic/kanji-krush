@@ -23,7 +23,7 @@ interface ServerOptions {
  * Starts the express app that serves both the frontend and backend
  */
 export async function startServer(options?: ServerOptions) {
-  const app = express();
+  const expressApp = express();
 
   // Connect to DB
   const db = await createConnection({
@@ -41,7 +41,7 @@ export async function startServer(options?: ServerOptions) {
     resolvers,
     typeDefs: importSchema('./be/schema/schema.graphql'),
   });
-  apolloServer.applyMiddleware({ app });
+  apolloServer.applyMiddleware({ app: expressApp });
 
   if (!options || !options.backendOnly) {
     // Prepare Nextjs
@@ -50,21 +50,22 @@ export async function startServer(options?: ServerOptions) {
     console.log('Starting NextJS frontend...');
     await nextJsApp.prepare();
 
-    // Routing for Nextjs
-    app.get('*', (req, res, skip) => {
-      if (req.url === '/graphql') {
-        // Let apollo-server handle this
-        skip();
-      }
-      // Be sure to pass `true` as the second argument to `url.parse`.
-      // This tells it to parse the query portion of the URL.
-      const parsedUrl = parse(req.url, true);
-      handle(req, res, parsedUrl);
+    // Routing for NextJS
+    // Chart page
+    expressApp.get('/:chartSlug', (req, res) => {
+      // NextJS serves static pages in the "/pages" directory
+      // Here, the actual page is "/chart", and we parse the slug into the query string
+      const queryParams = { chartSlug: req.params.chartSlug };
+      nextJsApp.render(req, res, '/chart', queryParams);
+    });
+    // Homepage
+    expressApp.get('*', (req, res) => {
+      handle(req, res);
     });
   }
 
   // Start express server
-  const httpServer = app.listen(process.env.PORT, () => {
+  const httpServer = expressApp.listen(process.env.PORT, () => {
     // tslint:disable-next-line no-console
     console.log(`Server started, listening on port ${process.env.PORT} for incoming requests.`);
   });

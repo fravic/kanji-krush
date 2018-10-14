@@ -9,8 +9,6 @@ export default class Document extends NextDocument {
       <html>
         <Head>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-          <link rel="stylesheet" href="/_next/static/style.css" />
           <link href="https://fonts.googleapis.com/css?family=Bitter:400,700|Source+Sans+Pro" rel="stylesheet" />
         </Head>
         <body>
