@@ -2,6 +2,7 @@ import { Chart } from '../../entities/Chart';
 import { DataPoint } from '../../entities/DataPoint';
 import { GQLMutationTypeResolver } from '../../schema/graphqlTypes';
 import { Context } from '../../types';
+import { generateSlug } from '../../utils/mnemonic';
 
 export const Mutation: GQLMutationTypeResolver = {
   addDataToChart: async (_, args, ctx: Context, info) => {
@@ -22,7 +23,7 @@ export const Mutation: GQLMutationTypeResolver = {
   createChart: async (_, args, ctx: Context, info) => {
     const chartRepo = ctx.db.getRepository(Chart);
     const chart = chartRepo.create({
-      slug: Math.random().toString(),
+      slug: generateSlug(4),
     });
     await chartRepo.save(chart);
     return chart;
