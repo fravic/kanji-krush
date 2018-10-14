@@ -1,3 +1,4 @@
+// tslint:disable:no-console
 import "reflect-metadata";
 
 import { ApolloServer } from 'apollo-server-express';
@@ -22,6 +23,8 @@ interface ServerOptions {
  * Starts the express app that serves both the frontend and backend
  */
 export async function startServer(options?: ServerOptions) {
+  const app = express();
+
   // Connect to DB
   const db = await createConnection({
     ...ormConfig,
@@ -31,7 +34,6 @@ export async function startServer(options?: ServerOptions) {
   });
 
   // Prepare ApolloServer
-  const server = express();
   const apolloServer = new ApolloServer({
     context: {
       db,
@@ -39,16 +41,17 @@ export async function startServer(options?: ServerOptions) {
     resolvers,
     typeDefs: importSchema('./be/schema/schema.graphql'),
   });
-  apolloServer.applyMiddleware({ app: server });
+  apolloServer.applyMiddleware({ app });
 
-  if (!options.backendOnly) {
+  if (!options || !options.backendOnly) {
     // Prepare Nextjs
-    const app = next({ dir: './fe', dev });
-    const handle = app.getRequestHandler();
-    await app.prepare();
+    const nextJsApp = next({ dir: './fe', dev });
+    const handle = nextJsApp.getRequestHandler();
+    console.log('Starting NextJS frontend...');
+    await nextJsApp.prepare();
 
     // Routing for Nextjs
-    server.get('*', (req, res, skip) => {
+    app.get('*', (req, res, skip) => {
       if (req.url === '/graphql') {
         // Let apollo-server handle this
         skip();
@@ -61,10 +64,16 @@ export async function startServer(options?: ServerOptions) {
   }
 
   // Start express server
-  server.listen(process.env.PORT, () => {
+  const httpServer = app.listen(process.env.PORT, () => {
     // tslint:disable-next-line no-console
     console.log(`Server started, listening on port ${process.env.PORT} for incoming requests.`);
   });
 
-  return server;
+  // Close the db connection when server exits
+  httpServer.on('close', () => {
+    console.log('App shutting down...');
+    db.close();
+  });
+
+  return httpServer;
 }

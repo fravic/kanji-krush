@@ -4,17 +4,16 @@
  * Runs against the database specified in process.env.TESTPGDATABASE
  */
 // tslint:disable:no-console
-
 import { Express } from 'express';
+import * as Http from 'http';
+import * as Https from 'https';
 import * as request from 'supertest';
 
 import { startServer } from '../server';
 
 describe('ChartCat GraphQL server', async () => {
 
-  const timeout = ms => new Promise(res => setTimeout(res, ms))
-
-  let server: Express;
+  let server: Http.Server | Https.Server;
   let testChartSlug: string;
 
   beforeAll(async () => {
@@ -26,8 +25,7 @@ describe('ChartCat GraphQL server', async () => {
   });
 
   afterAll(async () => {
-    // Wait 1 second for server to terminate
-    await timeout(1000);
+    await server.close();
     console.log('Done!');
   });
 

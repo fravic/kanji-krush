@@ -1,3 +1,9 @@
+// tslint:disable:no-console
 import { startServer } from './server';
 
-startServer();
+async function main() {
+  console.log('Starting express server...');
+  await startServer();
+}
+
+main();

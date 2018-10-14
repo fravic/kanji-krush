@@ -4,11 +4,11 @@
   "description": "ChartCat application",
   "license": "MIT",
   "scripts": {
-    "dev": "dotenv -- ts-node server.ts",
+    "dev": "dotenv -- ts-node index.ts",
     "build": "next build src",
-    "start": "NODE_ENV=production ts-node server.ts",
+    "start": "NODE_ENV=production ts-node index.ts",
+    "debug": "dotenv -- ts-node --inspect index.ts",
     "test": "dotenv -- jest",
-    "debug": "dotenv -- ts-node --inspect server.ts",
     "generate-types:be": "graphql-schema-typescript generate-ts ./be/schema/ --output be/schema/graphqlTypes.d.ts"
   },
   "engines": {
