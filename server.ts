@@ -4,14 +4,11 @@ import "reflect-metadata";
 import { ApolloServer } from 'apollo-server-express';
 import * as express from 'express';
 import { importSchema } from 'graphql-import';
-import * as next from 'next';
 import { createConnection } from "typeorm";
-import { parse } from 'url';
 
 import resolvers from './be/resolvers';
+import { setupNextJSApp } from './fe';
 import ormConfig from './ormconfig';
-
-const dev = process.env.NODE_ENV !== 'production';
 
 interface ServerOptions {
   backendOnly?: boolean;  // Enable to test the graphql server only
@@ -44,24 +41,7 @@ export async function startServer(options?: ServerOptions) {
   apolloServer.applyMiddleware({ app: expressApp });
 
   if (!options || !options.backendOnly) {
-    // Prepare Nextjs
-    const nextJsApp = next({ dir: './fe', dev });
-    const handle = nextJsApp.getRequestHandler();
-    console.log('Starting NextJS frontend...');
-    await nextJsApp.prepare();
-
-    // Routing for NextJS
-    // Chart page
-    expressApp.get('/:chartSlug', (req, res) => {
-      // NextJS serves static pages in the "/pages" directory
-      // Here, the actual page is "/chart", and we parse the slug into the query string
-      const queryParams = { chartSlug: req.params.chartSlug };
-      nextJsApp.render(req, res, '/chart', queryParams);
-    });
-    // Homepage
-    expressApp.get('*', (req, res) => {
-      handle(req, res);
-    });
+    setupNextJSApp(expressApp);
   }
 
   // Start express server
