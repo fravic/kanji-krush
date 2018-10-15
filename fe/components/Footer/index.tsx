@@ -12,7 +12,7 @@ export default class Footer extends React.Component<Props> {
     return (
       <div className={`${css.footer} ${className || ''}`}>
         <div>
-          © 2018 CoffeeCat
+          © 2018 Your Name
         </div>
       </div>
     );

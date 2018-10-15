@@ -11,7 +11,7 @@ import * as request from 'supertest';
 
 import { startServer } from '../server';
 
-describe('ChartCat GraphQL server', async () => {
+describe('GraphQL Server', async () => {
 
   let server: Http.Server | Https.Server;
   let testChartSlug: string;
