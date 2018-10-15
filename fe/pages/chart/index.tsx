@@ -20,7 +20,7 @@ class Chart extends React.Component<Props> {
   public render() {
     const { router } = this.props;
     return (
-      <Query query={ChartQuery} variables={{ chartSlug: router && router.query ? router.query.chartSlug : '' }}>
+      <Query query={ChartQuery} variables={{ chartSlug: router.query ? router.query.chartSlug : '' }}>
         {({ loading, error, data }) => {
           return (
             <div>
