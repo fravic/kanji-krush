@@ -16,7 +16,7 @@ Backend:
 
 **Getting Started:**
 
-1. Copy the `.env.example` file into `.env` for development mode, and `.env.prod` for prod mode.
+1. Copy the `.env.example` file into `.env` for development mode.
 2. ```yarn install```
 3. Run dev server
 
@@ -29,6 +29,8 @@ Backend:
 ```yarn dev```
 
 **Run In Prod Mode:**
+
+Set env variables in your prod environment separately (not using dotenv).
 
 ```yarn start```
 

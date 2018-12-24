@@ -1,11 +1,9 @@
-#import Chart from './types.graphql'
+#import * from './types.graphql'
 
 type Query {
-  chart(chartSlug: String!): Chart
+  game(id: String): Game
 }
 
 type Mutation {
-  addDataToChart(chartSlug: String!, value: Float!, dateTime: String!): Chart
-  createChart: Chart
-  renameChart(chartSlug: String!, chartName: String!): Chart
+  login: AuthPayload!
 }

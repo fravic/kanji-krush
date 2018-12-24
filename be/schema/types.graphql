@@ -2,16 +2,21 @@ interface Node {
   id: ID!
 }
 
-type Chart implements Node {
-  id: ID!
-  slug: String!
-  name: String
-  yAxisName: String
-  dataPoints: [DataPoint!]
+type Game {
+  subjects: [Subject!]
 }
 
-type DataPoint implements Node {
+type Subject {
+  characters: String!
+  meanings: [String!]
+  readings: [String!]
+}
+
+type AuthPayload {
+  user: User!
+  token: String!
+}
+
+type User implements Node {
   id: ID!
-  dateTime: String!
-  value: Float!
 }

@@ -12,15 +12,30 @@ import { GraphQLResolveInfo } from 'graphql';
  *                             *
  *******************************/
 export interface GQLQuery {
-  chart?: GQLChart;
+  game?: GQLGame;
 }
 
-export interface GQLChart extends GQLNode {
+export interface GQLGame {
+  subjects?: Array<GQLSubject>;
+}
+
+export interface GQLSubject {
+  characters: string;
+  meanings?: Array<string>;
+  readings?: Array<string>;
+}
+
+export interface GQLMutation {
+  login: GQLAuthPayload;
+}
+
+export interface GQLAuthPayload {
+  user: GQLUser;
+  token: string;
+}
+
+export interface GQLUser extends GQLNode {
   id: string;
-  slug: string;
-  name?: string;
-  yAxisName?: string;
-  dataPoints?: Array<GQLDataPoint>;
 }
 
 export interface GQLNode {
@@ -28,24 +43,11 @@ export interface GQLNode {
 }
 
 /** Use this to resolve interface type Node */
-export type GQLPossibleNodeTypeNames = 'Chart' | 'DataPoint';
+export type GQLPossibleNodeTypeNames = 'User';
 
 export interface GQLNodeNameMap {
   Node: GQLNode;
-  Chart: GQLChart;
-  DataPoint: GQLDataPoint;
-}
-
-export interface GQLDataPoint extends GQLNode {
-  id: string;
-  dateTime: string;
-  value: number;
-}
-
-export interface GQLMutation {
-  addDataToChart?: GQLChart;
-  createChart?: GQLChart;
-  renameChart?: GQLChart;
+  User: GQLUser;
 }
 
 /*********************************
@@ -60,97 +62,82 @@ export interface GQLMutation {
  */
 export interface GQLResolver {
   Query?: GQLQueryTypeResolver;
-  Chart?: GQLChartTypeResolver;
+  Game?: GQLGameTypeResolver;
+  Subject?: GQLSubjectTypeResolver;
+  Mutation?: GQLMutationTypeResolver;
+  AuthPayload?: GQLAuthPayloadTypeResolver;
+  User?: GQLUserTypeResolver;
   Node?: {
     __resolveType: GQLNodeTypeResolver
   };
   
-  DataPoint?: GQLDataPointTypeResolver;
-  Mutation?: GQLMutationTypeResolver;
 }
 export interface GQLQueryTypeResolver<TParent = any> {
-  chart?: QueryToChartResolver<TParent>;
+  game?: QueryToGameResolver<TParent>;
 }
 
-export interface QueryToChartArgs {
-  chartSlug: string;
+export interface QueryToGameArgs {
+  id?: string;
 }
-export interface QueryToChartResolver<TParent = any, TResult = any> {
-  (parent: TParent, args: QueryToChartArgs, context: any, info: GraphQLResolveInfo): TResult;
-}
-
-export interface GQLChartTypeResolver<TParent = any> {
-  id?: ChartToIdResolver<TParent>;
-  slug?: ChartToSlugResolver<TParent>;
-  name?: ChartToNameResolver<TParent>;
-  yAxisName?: ChartToYAxisNameResolver<TParent>;
-  dataPoints?: ChartToDataPointsResolver<TParent>;
+export interface QueryToGameResolver<TParent = any, TResult = any> {
+  (parent: TParent, args: QueryToGameArgs, context: any, info: GraphQLResolveInfo): TResult;
 }
 
-export interface ChartToIdResolver<TParent = any, TResult = any> {
+export interface GQLGameTypeResolver<TParent = any> {
+  subjects?: GameToSubjectsResolver<TParent>;
+}
+
+export interface GameToSubjectsResolver<TParent = any, TResult = any> {
   (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo): TResult;
 }
 
-export interface ChartToSlugResolver<TParent = any, TResult = any> {
+export interface GQLSubjectTypeResolver<TParent = any> {
+  characters?: SubjectToCharactersResolver<TParent>;
+  meanings?: SubjectToMeaningsResolver<TParent>;
+  readings?: SubjectToReadingsResolver<TParent>;
+}
+
+export interface SubjectToCharactersResolver<TParent = any, TResult = any> {
   (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo): TResult;
 }
 
-export interface ChartToNameResolver<TParent = any, TResult = any> {
+export interface SubjectToMeaningsResolver<TParent = any, TResult = any> {
   (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo): TResult;
 }
 
-export interface ChartToYAxisNameResolver<TParent = any, TResult = any> {
-  (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo): TResult;
-}
-
-export interface ChartToDataPointsResolver<TParent = any, TResult = any> {
-  (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo): TResult;
-}
-
-export interface GQLNodeTypeResolver<TParent = any> {
-  (parent: TParent, context: any, info: GraphQLResolveInfo): 'Chart' | 'DataPoint';
-}
-export interface GQLDataPointTypeResolver<TParent = any> {
-  id?: DataPointToIdResolver<TParent>;
-  dateTime?: DataPointToDateTimeResolver<TParent>;
-  value?: DataPointToValueResolver<TParent>;
-}
-
-export interface DataPointToIdResolver<TParent = any, TResult = any> {
-  (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo): TResult;
-}
-
-export interface DataPointToDateTimeResolver<TParent = any, TResult = any> {
-  (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo): TResult;
-}
-
-export interface DataPointToValueResolver<TParent = any, TResult = any> {
+export interface SubjectToReadingsResolver<TParent = any, TResult = any> {
   (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo): TResult;
 }
 
 export interface GQLMutationTypeResolver<TParent = any> {
-  addDataToChart?: MutationToAddDataToChartResolver<TParent>;
-  createChart?: MutationToCreateChartResolver<TParent>;
-  renameChart?: MutationToRenameChartResolver<TParent>;
+  login?: MutationToLoginResolver<TParent>;
 }
 
-export interface MutationToAddDataToChartArgs {
-  chartSlug: string;
-  value: number;
-  dateTime: string;
-}
-export interface MutationToAddDataToChartResolver<TParent = any, TResult = any> {
-  (parent: TParent, args: MutationToAddDataToChartArgs, context: any, info: GraphQLResolveInfo): TResult;
-}
-
-export interface MutationToCreateChartResolver<TParent = any, TResult = any> {
+export interface MutationToLoginResolver<TParent = any, TResult = any> {
   (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo): TResult;
 }
 
-export interface MutationToRenameChartArgs {
-  chartSlug: string;
-  chartName: string;
+export interface GQLAuthPayloadTypeResolver<TParent = any> {
+  user?: AuthPayloadToUserResolver<TParent>;
+  token?: AuthPayloadToTokenResolver<TParent>;
 }
-export interface MutationToRenameChartResolver<TParent = any, TResult = any> {
-  (parent: TParent, args: MutationToRenameChartArgs, context: any, info: GraphQLResolveInfo): TResult;
+
+export interface AuthPayloadToUserResolver<TParent = any, TResult = any> {
+  (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo): TResult;
+}
+
+export interface AuthPayloadToTokenResolver<TParent = any, TResult = any> {
+  (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo): TResult;
+}
+
+export interface GQLUserTypeResolver<TParent = any> {
+  id?: UserToIdResolver<TParent>;
+}
+
+export interface UserToIdResolver<TParent = any, TResult = any> {
+  (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo): TResult;
+}
+
+export interface GQLNodeTypeResolver<TParent = any> {
+  (parent: TParent, context: any, info: GraphQLResolveInfo): 'User';
 }

@@ -23,17 +23,19 @@ export async function startServer(options?: ServerOptions) {
   const expressApp = express();
 
   // Connect to DB
+  /* TODO: Disabling DB for now.
   const db = await createConnection({
     ...ormConfig,
     ...{
       database: options ? options.database : undefined,
     },
   });
+  */
 
   // Prepare ApolloServer
   const apolloServer = new ApolloServer({
     context: {
-      db,
+      // db,
     },
     resolvers,
     typeDefs: importSchema('./be/schema/schema.graphql'),
@@ -53,7 +55,7 @@ export async function startServer(options?: ServerOptions) {
   // Close the db connection when server exits
   httpServer.on('close', () => {
     console.log('App shutting down...');
-    db.close();
+    // db.close();
   });
 
   return httpServer;
