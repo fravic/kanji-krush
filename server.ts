@@ -34,9 +34,10 @@ export async function startServer(options?: ServerOptions) {
 
   // Prepare ApolloServer
   const apolloServer = new ApolloServer({
-    context: {
+    context: ({ req }) => ({
       // db,
-    },
+      req,
+    }),
     resolvers,
     typeDefs: importSchema('./be/schema/schema.graphql'),
   });

@@ -113,8 +113,11 @@ export interface GQLMutationTypeResolver<TParent = any> {
   login?: MutationToLoginResolver<TParent>;
 }
 
+export interface MutationToLoginArgs {
+  wanikaniApiKey: string;
+}
 export interface MutationToLoginResolver<TParent = any, TResult = any> {
-  (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo): TResult;
+  (parent: TParent, args: MutationToLoginArgs, context: any, info: GraphQLResolveInfo): TResult;
 }
 
 export interface GQLAuthPayloadTypeResolver<TParent = any> {

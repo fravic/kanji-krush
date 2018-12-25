@@ -2,6 +2,6 @@ import { Request } from 'express';
 import { Connection } from 'typeorm';
 
 export interface Context {
-  request: Request;
+  req: Request;
   db: Connection;
 }

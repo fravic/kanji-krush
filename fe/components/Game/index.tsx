@@ -20,7 +20,7 @@ const gameGQL = gql`
 const Game = () => (
   <GameQuery query={gameGQL}>
     {({ data, loading, error }) => {
-      return (
+      return (loading ? null :
         <div>
           {data.game.subjects.map(s => (
             <div>
