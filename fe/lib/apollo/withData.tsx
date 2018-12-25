@@ -25,15 +25,15 @@
  * SOFTWARE.
  */
 
-import { ApolloClient } from 'apollo-client';
-import Head from 'next/head';
-import * as React from 'react';
-import { ApolloProvider, getDataFromTree } from 'react-apollo';
-import initApollo from './initApollo';
+import { ApolloClient } from "apollo-client";
+import Head from "next/head";
+import * as React from "react";
+import { ApolloProvider, getDataFromTree } from "react-apollo";
+import initApollo from "./initApollo";
 
 // Gets the display name of a JSX component for dev tools
 function getComponentDisplayName(Component) {
-  return Component.displayName || Component.name || 'Unknown';
+  return Component.displayName || Component.name || "Unknown";
 }
 
 interface Props {
@@ -49,7 +49,7 @@ export const withData = apolloConfig => {
   return ComposedComponent => {
     return class WithData extends React.Component<Props> {
       public static displayName = `WithData(${getComponentDisplayName(
-        ComposedComponent,
+        ComposedComponent
       )})`;
 
       // NextJS calls this on top-level page components to enable server-side operations
@@ -79,17 +79,17 @@ export const withData = apolloConfig => {
                     // Add router props in case ComposedComponent uses them
                     asPath: ctx.asPath,
                     pathname: ctx.pathname,
-                    query: ctx.query,
+                    query: ctx.query
                   }}
                 />
-              </ApolloProvider>,
+              </ApolloProvider>
             );
           } catch (error) {
             // Prevent Apollo Client GraphQL errors from crashing SSR.
             // Handle them in components via the data.error prop:
             // http://dev.apollodata.com/react/api-queries.html#graphql-query-data-error
             // tslint:disable-next-line:no-console
-            console.error('Error getting data from tree:', error);
+            console.error("Error getting data from tree:", error);
           }
           // getDataFromTree does not call componentWillUnmount
           // head side effect therefore need to be cleared manually
@@ -98,14 +98,14 @@ export const withData = apolloConfig => {
           // Extract query data from the Apollo store
           serverState = {
             apollo: {
-              data: apollo.cache.extract(),
-            },
+              data: apollo.cache.extract()
+            }
           };
         }
 
         return {
           serverState,
-          ...composedInitialProps,
+          ...composedInitialProps
         };
       }
 
@@ -115,7 +115,7 @@ export const withData = apolloConfig => {
         super(props);
         this.apollo = initApollo(
           apolloConfig,
-          this.props.serverState.apollo.data,
+          this.props.serverState.apollo.data
         );
       }
 

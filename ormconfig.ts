@@ -1,4 +1,4 @@
-import { ConnectionOptions } from 'typeorm';
+import { ConnectionOptions } from "typeorm";
 
 /* tslint:disable:object-literal-sort-keys */
 export default {
@@ -10,13 +10,7 @@ export default {
   database: process.env.PGDATABASE,
   synchronize: true,
   logging: false,
-  entities: [
-    "be/entities/**/*.ts",
-  ],
-  migrations: [
-    "be/migrations/**/*.ts",
-  ],
-  subscribers: [
-    "be/subscribers/**/*.ts",
-  ],
+  entities: ["be/entities/**/*.ts"],
+  migrations: ["be/migrations/**/*.ts"],
+  subscribers: ["be/subscribers/**/*.ts"]
 } as ConnectionOptions;

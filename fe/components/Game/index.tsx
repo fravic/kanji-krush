@@ -1,7 +1,7 @@
-import gql from 'graphql-tag';
-import { Query } from 'react-apollo';
+import gql from "graphql-tag";
+import { Query } from "react-apollo";
 
-import { GQLQuery } from 'be/schema/graphqlTypes';
+import { GQLQuery } from "be/schema/graphqlTypes";
 
 class GameQuery extends Query<GQLQuery> {}
 
@@ -20,12 +20,10 @@ const gameGQL = gql`
 const Game = () => (
   <GameQuery query={gameGQL}>
     {({ data, loading, error }) => {
-      return (loading ? null :
+      return loading ? null : (
         <div>
           {data.game.subjects.map(s => (
-            <div>
-              {s.characters}
-            </div>
+            <div>{s.characters}</div>
           ))}
         </div>
       );

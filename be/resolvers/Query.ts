@@ -1,6 +1,10 @@
-import { fetchSubjects } from '../lib/wanikani';
-import { GQLGame, GQLQueryTypeResolver, GQLSubject } from '../schema/graphqlTypes';
-import { Context } from '../types';
+import { fetchSubjects } from "../lib/wanikani";
+import {
+  GQLGame,
+  GQLQueryTypeResolver,
+  GQLSubject
+} from "../schema/graphqlTypes";
+import { Context } from "../types";
 
 const NUM_SUBJECTS_PER_GAME = 8;
 
@@ -24,11 +28,11 @@ export const Query: GQLQueryTypeResolver = {
       characters: subjects[subjId].data.characters,
       id: subjId,
       meanings: subjects[subjId].data.meanings.map(m => m.meaning),
-      readings: subjects[subjId].data.readings.map(r => r.reading),
+      readings: subjects[subjId].data.readings.map(r => r.reading)
     }));
 
     return {
-      subjects: chosenSubjects,
+      subjects: chosenSubjects
     };
-  },
+  }
 };

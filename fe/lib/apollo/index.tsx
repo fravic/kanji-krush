@@ -1,6 +1,6 @@
-import { HttpLink } from 'apollo-link-http';
+import { HttpLink } from "apollo-link-http";
 
-import { withData } from './withData';
+import { withData } from "./withData";
 
 // Can also be a function that accepts a `context` object (SSR only) and returns a config
 const config = {
@@ -10,8 +10,8 @@ const config = {
     Next.js, and makes it harder to separate the backend in the future.
   */
   link: new HttpLink({
-    uri: process.env.GRAPHQL_ENDPONT,
-  }),
+    uri: process.env.GRAPHQL_ENDPONT
+  })
 };
 
 export default withData(config);

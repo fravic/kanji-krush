@@ -1,6 +1,6 @@
-import * as React from 'react';
+import * as React from "react";
 
-import css from './styles.scss';
+import css from "./styles.scss";
 
 interface Props {
   className?: string;
@@ -12,7 +12,7 @@ export default class Text extends React.Component<Props> {
     const { children, className, type } = this.props;
     const props = {
       children,
-      className: `${css.component} ${css[type]} ${className ? className : ''}`,
+      className: `${css.component} ${css[type]} ${className ? className : ""}`
     };
     if (type === "h1") {
       return <h1 {...props} />;

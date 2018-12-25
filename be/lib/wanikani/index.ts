@@ -1,8 +1,8 @@
-import 'isomorphic-fetch';
+import "isomorphic-fetch";
 
-import { Subject } from './types';
+import { Subject } from "./types";
 
-type SubjectMap = {[id: number]: Subject};
+type SubjectMap = { [id: number]: Subject };
 
 let subjectsLastLoadedAt = 0;
 const subjectsById: SubjectMap = {};
@@ -17,11 +17,14 @@ export async function fetchSubjects(): Promise<SubjectMap> {
     return subjectsById;
   }
 
-  const res = await fetch(process.env.WANIKANI_API_ENDPOINT + 'subjects?types=vocabulary', {
-    headers: {
-      Authorization: `Bearer ${process.env.WANIKANI_GENERIC_API_KEY}`,
-    },
-  });
+  const res = await fetch(
+    process.env.WANIKANI_API_ENDPOINT + "subjects?types=vocabulary",
+    {
+      headers: {
+        Authorization: `Bearer ${process.env.WANIKANI_GENERIC_API_KEY}`
+      }
+    }
+  );
   const data = await res.json();
 
   // TODO: Handle Wanikani pagination.
@@ -29,6 +32,6 @@ export async function fetchSubjects(): Promise<SubjectMap> {
   data.data.forEach(subject => {
     subjectsById[subject.id] = subject;
   });
-  subjectsLastLoadedAt = (new Date()).getTime();
+  subjectsLastLoadedAt = new Date().getTime();
   return subjectsById;
 }

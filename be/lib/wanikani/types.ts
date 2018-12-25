@@ -7,15 +7,19 @@ export interface Subject {
     level: string;
     slug: string;
     characters: string;
-    meanings: [{
-      meaning: string;
-      primary: boolean;
-      accepted_answer: boolean;
-    }];
-    readings: [{
-      primary: boolean;
-      reading: string;
-      accepted_answer: boolean;
-    }];
+    meanings: [
+      {
+        meaning: string;
+        primary: boolean;
+        accepted_answer: boolean;
+      }
+    ];
+    readings: [
+      {
+        primary: boolean;
+        reading: string;
+        accepted_answer: boolean;
+      }
+    ];
   };
 }

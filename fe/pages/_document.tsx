@@ -1,7 +1,7 @@
 // _document is only rendered on the server side and not on the client side
 // Event handlers like onClick can't be added to this file
 
-import NextDocument, { Head, Main, NextScript } from 'next/document';
+import NextDocument, { Head, Main, NextScript } from "next/document";
 
 export default class Document extends NextDocument {
   public render() {

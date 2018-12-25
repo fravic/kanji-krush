@@ -1,6 +1,6 @@
-import * as React from 'react';
+import * as React from "react";
 
-import css from './styles.scss';
+import css from "./styles.scss";
 
 interface Props {
   children?: React.ReactNode;
@@ -10,7 +10,7 @@ interface Props {
 
 export const Button = ({ children, className, disabled }: Props) => (
   <button
-    className={`${css.button} ${className || ''}`}
+    className={`${css.button} ${className || ""}`}
     disabled={disabled}
     type="submit"
   >

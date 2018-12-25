@@ -1,6 +1,3 @@
-const Header = () => (
-  <div>
-  </div>
-);
+const Header = () => <div />;
 
 export default Header;

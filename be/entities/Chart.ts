@@ -1,4 +1,10 @@
-import { Column, Entity, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryColumn,
+  PrimaryGeneratedColumn
+} from "typeorm";
 
 import { DataPoint } from "./DataPoint";
 

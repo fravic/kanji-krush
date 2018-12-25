@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-import { Button } from 'fe/components/Button';
+import { Button } from "fe/components/Button";
 
 type Props = {
   login: (apiKey: string) => Promise<any>;
@@ -9,13 +9,15 @@ type Props = {
 export const LoginForm = (props: Props) => {
   const [apiKeyValue, setApiKeyValue] = useState("");
   return (
-    <form onSubmit={(e: React.FormEvent) => {
-      e.preventDefault();
-      props.login(apiKeyValue);
-      return false;
-    }}>
+    <form
+      onSubmit={(e: React.FormEvent) => {
+        e.preventDefault();
+        props.login(apiKeyValue);
+        return false;
+      }}
+    >
       <input
-        onChange={(e) => setApiKeyValue(e.currentTarget.value)}
+        onChange={e => setApiKeyValue(e.currentTarget.value)}
         type="text"
         value={apiKeyValue}
       />

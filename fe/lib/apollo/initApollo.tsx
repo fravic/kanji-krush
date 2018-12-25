@@ -25,9 +25,9 @@
  * SOFTWARE.
  */
 
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { ApolloClient } from 'apollo-client';
-import fetch from 'isomorphic-fetch';
+import { InMemoryCache } from "apollo-cache-inmemory";
+import { ApolloClient } from "apollo-client";
+import fetch from "isomorphic-fetch";
 
 let apolloClient: ApolloClient<any> | null = null;
 
@@ -45,7 +45,7 @@ function create(apolloConfig, initialState) {
     cache: createCache().restore(initialState || {}),
     connectToDevTools: isBrowser,
     ssrMode: !isBrowser, // Disables forceFetch on the server (so queries are only run once)
-    ...apolloConfig,
+    ...apolloConfig
   };
 
   delete config.createCache;
@@ -54,7 +54,7 @@ function create(apolloConfig, initialState) {
 }
 
 export default function initApollo(apolloConfig, initialState, ctx?) {
-  if (typeof apolloConfig === 'function') {
+  if (typeof apolloConfig === "function") {
     apolloConfig = apolloConfig(ctx);
   }
   // Make sure to create a new client for every server-side request so that data
