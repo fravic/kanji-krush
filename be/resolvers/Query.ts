@@ -1,4 +1,4 @@
-import { fetchSubjects } from "../lib/wanikani";
+import { fetchSubjects, fetchStartedAssignments } from "../lib/wanikani";
 import {
   GQLGame,
   GQLQueryTypeResolver,
@@ -10,18 +10,35 @@ const NUM_SUBJECTS_PER_GAME = 8;
 
 export const Query: GQLQueryTypeResolver = {
   game: async (_, args, ctx: Context, info): Promise<GQLGame> => {
-    const subjects = await fetchSubjects();
+    const wanikaniApiKey = ctx.req.cookies.wanikaniApiKey;
+    console.log("Fetching game with api key", wanikaniApiKey);
+    if (!wanikaniApiKey) {
+      // Can't start a game without a user-provided api key
+      return { subjects: [] };
+    }
 
-    // Choose some random subjects for now
+    const subjects = await fetchSubjects();
+    const assignments = await fetchStartedAssignments(
+      ctx.req.cookies.wanikaniApiKey
+    );
+    const startedSubjectIds = new Set(assignments.map(a => a.data.subject_id));
+
+    // Choose some random subjects from the ones the user has unlocked
     const chosenSubjectIds = [];
-    const subjectIds = Object.keys(subjects);
-    const numSubjects = subjectIds.length;
-    while (chosenSubjectIds.length < NUM_SUBJECTS_PER_GAME) {
-      const randIdx = Math.round(Math.random() * numSubjects);
-      const subjectId = subjectIds[randIdx];
-      if (chosenSubjectIds.indexOf(subjectId) < 0) {
-        chosenSubjectIds.push(subjectId);
-      }
+    const subjectIds = new Set(
+      Object.keys(subjects).filter(
+        x =>
+          startedSubjectIds.has(parseInt(x, 10)) && !!subjects[parseInt(x, 10)]
+      )
+    );
+    while (
+      chosenSubjectIds.length < NUM_SUBJECTS_PER_GAME &&
+      subjectIds.size > 0
+    ) {
+      const randIdx = Math.floor(Math.random() * subjectIds.size);
+      const subjectId = Array.from(subjectIds)[randIdx];
+      subjectIds.delete(subjectId);
+      chosenSubjectIds.push(subjectId);
     }
 
     const chosenSubjects: GQLSubject[] = chosenSubjectIds.map(subjId => ({

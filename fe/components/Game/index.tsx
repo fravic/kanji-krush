@@ -1,34 +1,15 @@
-import gql from "graphql-tag";
-import { Query } from "react-apollo";
+import { GQLGame } from "be/schema/graphqlTypes";
 
-import { GQLQuery } from "be/schema/graphqlTypes";
+type Props = {
+  game: GQLGame | null;
+};
 
-class GameQuery extends Query<GQLQuery> {}
-
-const gameGQL = gql`
-  query {
-    game {
-      subjects {
-        meanings
-        readings
-        characters
-      }
-    }
-  }
-`;
-
-const Game = () => (
-  <GameQuery query={gameGQL}>
-    {({ data, loading, error }) => {
-      return loading ? null : (
-        <div>
-          {data.game.subjects.map(s => (
-            <div>{s.characters}</div>
-          ))}
-        </div>
-      );
-    }}
-  </GameQuery>
+const Game = ({ game }: Props) => (
+  <div>
+    {game.subjects.map(s => (
+      <div>{s.characters}</div>
+    ))}
+  </div>
 );
 
 export default Game;

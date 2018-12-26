@@ -1,6 +1,6 @@
 import "isomorphic-fetch";
 
-import { Subject } from "./types";
+import { Assignment, Subject } from "./types";
 
 type SubjectMap = { [id: number]: Subject };
 
@@ -9,7 +9,8 @@ const subjectsById: SubjectMap = {};
 
 /**
  * fetchSubjects
- * Fetches a list of all subects from Wanikani. Caches this list in memory for the lifetime of the app.
+ * Fetches a list of all vocabulary subects from Wanikani. Caches this list in memory for the lifetime of the app.
+ * Note that the results of this query are reused across ALL users.
  */
 export async function fetchSubjects(): Promise<SubjectMap> {
   // TODO: Expire the cache after some time
@@ -34,4 +35,30 @@ export async function fetchSubjects(): Promise<SubjectMap> {
   });
   subjectsLastLoadedAt = new Date().getTime();
   return subjectsById;
+}
+
+/**
+ * fetchStartedAssignments
+ * Fetches the vocabulary assignments that have been started by the current Wanikani user.
+ */
+export async function fetchStartedAssignments(
+  wanikaniApiKey: string
+): Promise<Assignment[]> {
+  if (!wanikaniApiKey) {
+    console.error("No wanikaniApiKey provided");
+    return [];
+  }
+  const res = await fetch(
+    process.env.WANIKANI_API_ENDPOINT +
+      "assignments?subject_types=vocabulary&started=true",
+    {
+      headers: {
+        Authorization: `Bearer ${wanikaniApiKey}`
+      }
+    }
+  );
+
+  // TODO: Handle Wanikani pagination.
+  const data = await res.json();
+  return data.data;
 }

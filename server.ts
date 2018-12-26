@@ -2,6 +2,7 @@
 import "reflect-metadata";
 
 import { ApolloServer } from "apollo-server-express";
+import * as cookieParser from "cookie-parser";
 import * as express from "express";
 import { importSchema } from "graphql-import";
 import { createConnection } from "typeorm";
@@ -21,6 +22,7 @@ interface ServerOptions {
  */
 export async function startServer(options?: ServerOptions) {
   const expressApp = express();
+  expressApp.use(cookieParser());
 
   // Connect to DB
   /* TODO: Disabling DB for now.
