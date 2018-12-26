@@ -45,7 +45,8 @@
     "ts-node": "7.0.0",
     "tslint-plugin-prettier": "2.0.1",
     "typeorm": "0.2.7",
-    "typescript": "2.9.2"
+    "typescript": "2.9.2",
+    "wanakana": "4.0.2"
   },
   "devDependencies": {
     "@types/jest": "23.1.1",

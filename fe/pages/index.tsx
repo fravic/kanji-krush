@@ -1,11 +1,11 @@
 import gql from "graphql-tag";
-import * as React from "react";
-import { Mutation, Query } from "react-apollo";
+import { useState } from "react";
+import { Query } from "react-apollo";
 
-import { GQLAuthPayload, GQLQuery } from "be/schema/graphqlTypes";
+import { GQLQuery } from "be/schema/graphqlTypes";
 import Game from "fe/components/Game";
 import Header from "fe/components/Header";
-import { LoginForm } from "fe/components/LoginForm";
+import { KanaInputField } from "fe/components/KanaInputField";
 import Page from "fe/components/Page/";
 import withApollo from "fe/lib/apollo/";
 
@@ -23,20 +23,10 @@ const gameQueryGQL = gql`
   }
 `;
 
-const loginMutationGQL = gql`
-  mutation($wanikaniApiKey: String!) {
-    login(wanikaniApiKey: $wanikaniApiKey) {
-      user {
-        id
-      }
-    }
-  }
-`;
-
 class GameQuery extends Query<GQLQuery> {}
-class LoginMutation extends Mutation<GQLAuthPayload> {}
 
 const Homepage = ({}) => {
+  const [kanaInputValue, setKanaInputValue] = useState("");
   return (
     <Page className={css.homepage}>
       <GameQuery query={gameQueryGQL}>
@@ -44,21 +34,10 @@ const Homepage = ({}) => {
           <>
             <Header />
             {data && data.game ? <Game game={data.game} /> : null}
-            <LoginMutation mutation={loginMutationGQL}>
-              {login => (
-                <LoginForm
-                  login={async (wanikaniApiKey: string) => {
-                    const res = await login({
-                      variables: {
-                        wanikaniApiKey
-                      }
-                    });
-                    refetch();
-                    return res;
-                  }}
-                />
-              )}
-            </LoginMutation>
+            <KanaInputField
+              onChange={setKanaInputValue}
+              value={kanaInputValue}
+            />
           </>
         )}
       </GameQuery>

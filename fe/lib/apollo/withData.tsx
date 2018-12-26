@@ -37,7 +37,7 @@ function getComponentDisplayName(Component) {
 }
 
 interface Props {
-  serverState: { apollo: { data: any } };
+  serverState: { apollo?: { data: any } };
 }
 
 /**
@@ -115,7 +115,7 @@ export const withData = apolloConfig => {
         super(props);
         this.apollo = initApollo(
           apolloConfig,
-          this.props.serverState.apollo.data
+          props.serverState.apollo ? props.serverState.apollo.data : {}
         );
       }
 
