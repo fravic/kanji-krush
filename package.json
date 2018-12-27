@@ -33,6 +33,7 @@
     "express": "4.16.4",
     "graphql-import": "0.7.1",
     "graphql-schema-typescript": "1.2.7",
+    "immer": "1.9.3",
     "isomorphic-fetch": "2.2.1",
     "next": "7.0.2",
     "next-apollo": "2.0.0",

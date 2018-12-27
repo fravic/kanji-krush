@@ -14,8 +14,11 @@ type Props = {
 export const KanaInputField = ({ onChange, value }: Props) => {
   return (
     <input
+      autoFocus
       className={styles["kana-input-field"]}
-      onChange={e => onChange(toHiragana(e.currentTarget.value))}
+      onChange={e =>
+        onChange(toHiragana(e.currentTarget.value, { IMEMode: true }))
+      }
       value={value}
     />
   );
