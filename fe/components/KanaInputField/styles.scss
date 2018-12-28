@@ -1,8 +1,15 @@
 .kana-input-field {
   border: none;
   font-size: 64px;
-  text-align: center;
+  height: 100%;
   width: 100%;
+  text-align: center;
 
+  background: transparent;
+  cursor: default;
   outline: none;
+
+  /* Hide the input field cursor (cursor has no text-shadow) */
+  color: transparent;
+  text-shadow: 0 0 0 gray;
 }

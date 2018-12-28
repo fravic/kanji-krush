@@ -9,6 +9,8 @@ import { KanaInputField } from "fe/components/KanaInputField";
 import { createSubject, Subject } from "fe/lib/subject";
 import { useGameLoop } from "fe/lib/useGameLoop";
 
+import css from "./styles.scss";
+
 enum GameState {
   NOT_STARTED,
   STARTED,
@@ -37,14 +39,16 @@ export const Game = ({ initialSubjects }: Props) => {
       {GameState[gameState]}
       <Header />
       <SubjectsCanvas subjects={subjects} />
-      <KanaInputField
-        onChange={handleKanaInputChange(
-          subjects,
-          setSubjects,
-          setKanaInputValue
-        )}
-        value={kanaInputValue}
-      />
+      <div className={css["input-container"]}>
+        <KanaInputField
+          onChange={handleKanaInputChange(
+            subjects,
+            setSubjects,
+            setKanaInputValue
+          )}
+          value={kanaInputValue}
+        />
+      </div>
     </>
   );
 };
