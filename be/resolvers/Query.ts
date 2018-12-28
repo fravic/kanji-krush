@@ -6,7 +6,7 @@ import {
 } from "../schema/graphqlTypes";
 import { Context } from "../types";
 
-const NUM_SUBJECTS_PER_GAME = 8;
+const NUM_SUBJECTS_PER_GAME = 5;
 
 export const Query: GQLQueryTypeResolver = {
   game: async (_, args, ctx: Context, info): Promise<GQLGame> => {
