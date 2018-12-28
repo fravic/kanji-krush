@@ -1,3 +1,4 @@
+import { NUM_SUBJECTS_PER_GAME } from "../../config";
 import { fetchSubjects, fetchStartedAssignments } from "../lib/wanikani";
 import {
   GQLGame,
@@ -5,8 +6,6 @@ import {
   GQLSubject
 } from "../schema/graphqlTypes";
 import { Context } from "../types";
-
-const NUM_SUBJECTS_PER_GAME = 5;
 
 export const Query: GQLQueryTypeResolver = {
   game: async (_, args, ctx: Context, info): Promise<GQLGame> => {

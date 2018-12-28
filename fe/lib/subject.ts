@@ -1,7 +1,5 @@
 import { GQLSubject } from "be/schema/graphqlTypes";
-
-const MIN_LIFETIME = 1000 * 12;
-const MAX_LIFETIME = 1000 * 20;
+import { SUBJECT_MIN_LIFETIME, SUBJECT_MAX_LIFETIME } from "config";
 
 // Contains client-side data about a Subject
 export type Subject = {
@@ -12,7 +10,8 @@ export type Subject = {
 
 export function createSubject(gqlSubject: GQLSubject) {
   const randDuration = Math.round(
-    Math.random() * (MAX_LIFETIME - MIN_LIFETIME) + MIN_LIFETIME
+    Math.random() * (SUBJECT_MAX_LIFETIME - SUBJECT_MIN_LIFETIME) +
+      SUBJECT_MIN_LIFETIME
   );
   const expiryTime = new Date().getTime() + randDuration;
   return {

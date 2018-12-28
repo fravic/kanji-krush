@@ -1,14 +1,13 @@
 import produce from "immer";
 import { useEffect, useState } from "react";
 
+import { EXPIRIES_FOR_LOSS } from "config";
 import { GQLSubject } from "be/schema/graphqlTypes";
 import SubjectsCanvas from "fe/components/SubjectsCanvas";
 import Header from "fe/components/Header";
 import { KanaInputField } from "fe/components/KanaInputField";
 import { createSubject, Subject } from "fe/lib/subject";
 import { useGameLoop } from "fe/lib/useGameLoop";
-
-const EXPIRIES_FOR_LOSS = 3;
 
 enum GameState {
   NOT_STARTED,
@@ -60,7 +59,7 @@ function handleKanaInputChange(
     setSubjects(
       produce(subjects, draft => {
         draft.forEach(s => {
-          if (s.subject.readings.indexOf(kanaInputValue) >= 0) {
+          if (!s.completed && s.subject.readings.indexOf(kanaInputValue) >= 0) {
             console.log("Matched kana!", kanaInputValue);
             s.completed = true;
             setKanaInputValue("");
