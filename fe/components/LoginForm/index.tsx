@@ -6,7 +6,7 @@ type Props = {
   login: (apiKey: string) => Promise<any>;
 };
 
-export const LoginForm = (props: Props) => {
+export const LoginForm: React.SFC<Props> = props => {
   const [apiKeyValue, setApiKeyValue] = useState("");
   return (
     <form

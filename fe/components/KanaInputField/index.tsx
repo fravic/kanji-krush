@@ -13,7 +13,7 @@ type Props = {
  * KanaInputField
  * Controlled input for inputting hiragana. Focused automatically and when user clicks anywhere.
  */
-export const KanaInputField = ({ onChange, value }: Props) => {
+export const KanaInputField: React.SFC<Props> = ({ onChange, value }) => {
   let inputRef: HTMLInputElement | null = null;
   useEffect(() => {
     function documentClickHandler(e: MouseEvent) {

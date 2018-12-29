@@ -3,6 +3,10 @@ import { useEffect, useState } from "react";
 
 import { EXPIRIES_FOR_LOSS } from "config";
 import { GQLSubject } from "be/schema/graphqlTypes";
+import {
+  CorrectAnswerAnimation,
+  CorrectAnswer
+} from "fe/components/CorrectAnswerAnimation";
 import SubjectsCanvas from "fe/components/SubjectsCanvas";
 import Header from "fe/components/Header";
 import { KanaInputField } from "fe/components/KanaInputField";
@@ -22,10 +26,11 @@ type Props = {
   initialSubjects: GQLSubject[];
 };
 
-export const Game = ({ initialSubjects }: Props) => {
+export const Game: React.SFC<Props> = ({ initialSubjects }) => {
   const [gameState, setGameState] = useState(GameState.NOT_STARTED);
   const [kanaInputValue, setKanaInputValue] = useState("");
   const [subjects, setSubjects] = useState(new Set<Subject>());
+  const [correctAnswers, setCorrectAnswers] = useState<CorrectAnswer[]>([]);
   useEffect(
     () => {
       setSubjects(new Set(initialSubjects.map(s => createSubject(s))));
@@ -39,12 +44,14 @@ export const Game = ({ initialSubjects }: Props) => {
       {GameState[gameState]}
       <Header />
       <SubjectsCanvas subjects={subjects} />
+      <CorrectAnswerAnimation correctAnswers={correctAnswers} />
       <div className={css["input-container"]}>
         <KanaInputField
           onChange={handleKanaInputChange(
             subjects,
             setSubjects,
-            setKanaInputValue
+            setKanaInputValue,
+            setCorrectAnswers
           )}
           value={kanaInputValue}
         />
@@ -56,21 +63,33 @@ export const Game = ({ initialSubjects }: Props) => {
 function handleKanaInputChange(
   subjects: Set<Subject>,
   setSubjects: React.Dispatch<React.SetStateAction<Set<Subject>>>,
-  setKanaInputValue: React.Dispatch<React.SetStateAction<string>>
+  setKanaInputValue: React.Dispatch<React.SetStateAction<string>>,
+  setCorrectAnswers: React.Dispatch<React.SetStateAction<CorrectAnswer[]>>
 ) {
   return kanaInputValue => {
     setKanaInputValue(kanaInputValue);
-    setSubjects(
-      produce(subjects, draft => {
-        draft.forEach(s => {
-          if (!s.completed && s.subject.readings.indexOf(kanaInputValue) >= 0) {
-            console.log("Matched kana!", kanaInputValue);
-            s.completed = true;
-            setKanaInputValue("");
-          }
-        });
-      })
-    );
+    subjects.forEach(s => {
+      if (!s.completed && s.subject.readings.indexOf(kanaInputValue) >= 0) {
+        setKanaInputValue("");
+        setSubjects(
+          produce(draft => {
+            draft.delete(s);
+            draft.add({
+              ...s,
+              completed: true
+            });
+          })
+        );
+        setCorrectAnswers(
+          produce(draft => {
+            draft.push({
+              reading: kanaInputValue,
+              meanings: s.subject.meanings
+            });
+          })
+        );
+      }
+    });
   };
 }
 
