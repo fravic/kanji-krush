@@ -1,7 +1,10 @@
+@import "fe/scss/variables.scss";
+
 .kana-input-field {
   border: none;
+  font-family: $font-sans;
   font-size: 64px;
-  height: 100%;
+  line-height: 90px;
   width: 100%;
   text-align: center;
 
@@ -9,7 +12,5 @@
   cursor: default;
   outline: none;
 
-  /* Hide the input field cursor (cursor has no text-shadow) */
-  color: transparent;
-  text-shadow: 0 0 0 gray;
+  color: white;
 }

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 import { toHiragana } from "wanakana";
 
-import styles from "./styles.scss";
+import css from "./styles.scss";
 
 type Props = {
   onChange: (value: string) => void;
@@ -29,7 +29,7 @@ export const KanaInputField: React.SFC<Props> = ({ onChange, value }) => {
   return (
     <input
       autoFocus
-      className={styles["kana-input-field"]}
+      className={css["kana-input-field"]}
       onChange={e =>
         onChange(toHiragana(e.currentTarget.value, { IMEMode: true }))
       }

@@ -1,0 +1,79 @@
+@import "fe/scss/variables.scss";
+
+$move-up-amt: -150px;
+$duration: 2.8s;
+
+@keyframes correct-answer-move-up {
+  0% {
+  }
+  10% {
+    transform: translate3d(0, $move-up-amt, 0);
+    animation-timing-function: ease-out;
+  }
+  90% {
+    opacity: 1;
+    transform: translate3d(0, $move-up-amt, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, $move-up-amt * 2, 0);
+    animation-timing-function: ease-in;
+  }
+}
+
+@keyframes correct-answer-fade-in {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+    transform: translate3d(0, $move-up-amt, 0);
+    animation-timing-function: ease-out;
+  }
+  90% {
+    opacity: 1;
+    transform: translate3d(0, $move-up-amt, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, $move-up-amt * 2, 0);
+    animation-timing-function: ease-in;
+  }
+}
+
+@keyframes correct-answer-scale {
+  0% {
+  }
+  10% {
+    transform: scale(0.8);
+  }
+  90% {
+    transform: scale(0.8);
+  }
+  100% {
+    transform: scale(0.6);
+  }
+}
+
+.correct-answer-animation {
+  animation: correct-answer-scale $duration forwards;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  text-align: center;
+
+  .reading {
+    animation: correct-answer-move-up $duration forwards;
+    font-size: 64px;
+    line-height: 90px;
+
+    color: white;
+  }
+
+  .meanings {
+    position: relative;
+    top: -6px;
+    animation: correct-answer-fade-in $duration forwards;
+    color: white;
+  }
+}

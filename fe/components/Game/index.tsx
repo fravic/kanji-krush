@@ -30,7 +30,9 @@ export const Game: React.SFC<Props> = ({ initialSubjects }) => {
   const [gameState, setGameState] = useState(GameState.NOT_STARTED);
   const [kanaInputValue, setKanaInputValue] = useState("");
   const [subjects, setSubjects] = useState(new Set<Subject>());
-  const [correctAnswers, setCorrectAnswers] = useState<CorrectAnswer[]>([]);
+  const [correctAnswer, setCorrectAnswer] = useState<CorrectAnswer | null>(
+    null
+  );
   useEffect(
     () => {
       setSubjects(new Set(initialSubjects.map(s => createSubject(s))));
@@ -40,23 +42,28 @@ export const Game: React.SFC<Props> = ({ initialSubjects }) => {
   );
   useGameLoop(checkEndGameConditions(subjects, gameState, setGameState), 100);
   return (
-    <>
+    <div className={css["game"]}>
       {GameState[gameState]}
       <Header />
       <SubjectsCanvas subjects={subjects} />
-      <CorrectAnswerAnimation correctAnswers={correctAnswers} />
       <div className={css["input-container"]}>
         <KanaInputField
           onChange={handleKanaInputChange(
             subjects,
             setSubjects,
             setKanaInputValue,
-            setCorrectAnswers
+            setCorrectAnswer
           )}
           value={kanaInputValue}
         />
+        {correctAnswer ? (
+          <CorrectAnswerAnimation
+            key={correctAnswer.reading}
+            correctAnswer={correctAnswer}
+          />
+        ) : null}
       </div>
-    </>
+    </div>
   );
 };
 
@@ -64,7 +71,7 @@ function handleKanaInputChange(
   subjects: Set<Subject>,
   setSubjects: React.Dispatch<React.SetStateAction<Set<Subject>>>,
   setKanaInputValue: React.Dispatch<React.SetStateAction<string>>,
-  setCorrectAnswers: React.Dispatch<React.SetStateAction<CorrectAnswer[]>>
+  setCorrectAnswer: React.Dispatch<React.SetStateAction<CorrectAnswer>>
 ) {
   return kanaInputValue => {
     setKanaInputValue(kanaInputValue);
@@ -80,14 +87,10 @@ function handleKanaInputChange(
             });
           })
         );
-        setCorrectAnswers(
-          produce(draft => {
-            draft.push({
-              reading: kanaInputValue,
-              meanings: s.subject.meanings
-            });
-          })
-        );
+        setCorrectAnswer({
+          reading: kanaInputValue,
+          meanings: s.subject.meanings
+        });
       }
     });
   };
