@@ -64,10 +64,11 @@ $duration: 2.8s;
 
   .reading {
     animation: correct-answer-move-up $duration forwards;
-    font-size: 64px;
+    font-size: 70px;
     line-height: 90px;
 
     color: white;
+    text-shadow: 0px 3px 0px fade-out(lighten($c-sky-blue, 10%), 0.2);
   }
 
   .meanings {

@@ -11,14 +11,13 @@ $c-dark-blue: #1d2439;
 $c-gray: #5d5d5d;
 $c-light-gray: #e9e7e7;
 $c-green: #4ca69f;
-$c-yellow: #faaf00;
+$c-sky-blue: #33adff;
 
 $c-border: $c-light-gray;
 $c-bg-dark: $c-dark-blue;
 $c-cta: $c-green;
 $c-text-body: $c-gray;
 $c-text-header: $c-dark-blue;
-$c-text-highlight: $c-yellow;
 
 // Breakpoints
 $mobile: 480px;
@@ -35,4 +34,4 @@ $page-padding-desktop: 2.5rem;
 
 // Misc
 $border-radius: 6px;
-$box-shadow: 0 4px 6px rgba(0,0,0,0.06);
+$box-shadow: 0 4px 6px rgba(0, 0, 0, 0.06);

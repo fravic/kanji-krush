@@ -7,7 +7,7 @@ import {
   CorrectAnswerAnimation,
   CorrectAnswer
 } from "fe/components/CorrectAnswerAnimation";
-import SubjectsCanvas from "fe/components/SubjectsCanvas";
+import { SubjectsDisplay } from "fe/components/SubjectsDisplay";
 import Header from "fe/components/Header";
 import { KanaInputField } from "fe/components/KanaInputField";
 import { createSubject, Subject } from "fe/lib/subject";
@@ -35,7 +35,7 @@ export const Game: React.SFC<Props> = ({ initialSubjects }) => {
   );
   useEffect(
     () => {
-      setSubjects(new Set(initialSubjects.map(s => createSubject(s))));
+      setSubjects(new Set(initialSubjects.map((s, i) => createSubject(s, i))));
       setGameState(GameState.STARTED);
     },
     [initialSubjects]
@@ -45,7 +45,7 @@ export const Game: React.SFC<Props> = ({ initialSubjects }) => {
     <div className={css["game"]}>
       {GameState[gameState]}
       <Header />
-      <SubjectsCanvas subjects={subjects} />
+      <SubjectsDisplay subjects={subjects} />
       <div className={css["input-container"]}>
         <KanaInputField
           onChange={handleKanaInputChange(
@@ -76,7 +76,12 @@ function handleKanaInputChange(
   return kanaInputValue => {
     setKanaInputValue(kanaInputValue);
     subjects.forEach(s => {
-      if (!s.completed && s.subject.readings.indexOf(kanaInputValue) >= 0) {
+      const t = new Date().getTime();
+      if (
+        !s.completed &&
+        t <= s.expiryTime &&
+        s.subject.readings.indexOf(kanaInputValue) >= 0
+      ) {
         setKanaInputValue("");
         setSubjects(
           produce(draft => {
@@ -108,15 +113,21 @@ function checkEndGameConditions(
     const now = new Date().getTime();
     const subArr = Array.from(subjects);
 
-    const numComplete = subArr.filter(s => s.completed).length;
-    if (numComplete === subjects.size) {
-      setGameState(GameState.WON);
+    // Did the user lose?
+    const numExpired = subArr.filter(s => now > s.expiryTime && !s.completed)
+      .length;
+    if (numExpired >= EXPIRIES_FOR_LOSS) {
+      setGameState(GameState.LOST);
       return;
     }
 
-    const numExpired = subArr.filter(s => now > s.expiryTime).length;
-    if (numExpired >= EXPIRIES_FOR_LOSS) {
-      setGameState(GameState.LOST);
+    const numComplete = subArr.filter(s => s.completed).length;
+    if (
+      numComplete === subjects.size ||
+      numComplete + numExpired === subjects.size
+    ) {
+      // TODO: Show a lesser win state if some subjects were missed
+      setGameState(GameState.WON);
     }
   };
 }
