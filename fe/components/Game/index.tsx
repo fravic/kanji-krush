@@ -7,20 +7,16 @@ import {
   CorrectAnswerAnimation,
   CorrectAnswer
 } from "fe/components/CorrectAnswerAnimation";
+import { GameStateAnimation } from "fe/components/GameStateAnimation";
 import { SubjectsDisplay } from "fe/components/SubjectsDisplay";
 import Header from "fe/components/Header";
 import { KanaInputField } from "fe/components/KanaInputField";
+import { concatCss } from "fe/lib/concatCss";
+import { GameState } from "fe/lib/game";
 import { createSubject, Subject } from "fe/lib/subject";
 import { useGameLoop } from "fe/lib/useGameLoop";
 
 import css from "./styles.scss";
-
-enum GameState {
-  NOT_STARTED,
-  STARTED,
-  LOST,
-  WON
-}
 
 type Props = {
   initialSubjects: GQLSubject[];
@@ -42,8 +38,12 @@ export const Game: React.SFC<Props> = ({ initialSubjects }) => {
   );
   useGameLoop(checkEndGameConditions(subjects, gameState, setGameState), 100);
   return (
-    <div className={css["game"]}>
-      {GameState[gameState]}
+    <div
+      className={concatCss(
+        css["game"],
+        css[`game-state-${GameState[gameState].toLowerCase()}`]
+      )}
+    >
       <Header />
       <SubjectsDisplay subjects={subjects} />
       <div className={css["input-container"]}>
@@ -63,6 +63,7 @@ export const Game: React.SFC<Props> = ({ initialSubjects }) => {
           />
         ) : null}
       </div>
+      <GameStateAnimation gameState={gameState} subjects={subjects} />
     </div>
   );
 };

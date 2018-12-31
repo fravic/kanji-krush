@@ -16,4 +16,12 @@
     position: absolute;
     width: 600px;
   }
+
+  &.game-state-won,
+  &.game-state-lost {
+    .input-container {
+      transition: opacity 0.75s linear;
+      opacity: 0;
+    }
+  }
 }

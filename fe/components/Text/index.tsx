@@ -7,7 +7,7 @@ interface Props {
   type: "h1" | "h2" | "body" | "label";
 }
 
-export default class Text extends React.Component<Props> {
+export class Text extends React.Component<Props> {
   public render() {
     const { children, className, type } = this.props;
     const props = {
@@ -22,3 +22,5 @@ export default class Text extends React.Component<Props> {
     return <div {...props} />;
   }
 }
+
+export default Text;

@@ -5,6 +5,8 @@ import { useGameLoop } from "fe/lib/useGameLoop";
 
 import css from "./styles.scss";
 
+const BOTTOM_SPACE = 250;
+
 type Props = {
   subjects: Set<Subject>;
 };
@@ -53,10 +55,14 @@ function drawFrame(
 
   ctx.font = "48px adelle-sans";
   ctx.fillStyle = "white";
-  subjects.forEach(s => drawSubject(ctx, s));
+  subjects.forEach(s => drawSubject(ctx, s, subjects.size));
 }
 
-function drawSubject(ctx: CanvasRenderingContext2D, s: Subject) {
+function drawSubject(
+  ctx: CanvasRenderingContext2D,
+  s: Subject,
+  subjectCount: number
+) {
   if (s.completed) {
     return;
   }
@@ -66,7 +72,10 @@ function drawSubject(ctx: CanvasRenderingContext2D, s: Subject) {
     ctx.canvas.clientWidth,
     invLerp(s.startTime, s.expiryTime, t)
   );
-  ctx.fillText(s.subject.characters, x, 100 * (s.lanePosition + 1));
+  const y =
+    ((ctx.canvas.clientHeight - BOTTOM_SPACE) / subjectCount) *
+    (s.lanePosition + 1);
+  ctx.fillText(s.subject.characters, x, y);
 }
 
 function lerp(x1: number, x2: number, t: number) {
