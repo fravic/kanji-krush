@@ -17,24 +17,33 @@ export async function fetchSubjects(): Promise<SubjectMap> {
   if (subjectsLastLoadedAt) {
     return subjectsById;
   }
-
-  const res = await fetch(
-    process.env.WANIKANI_API_ENDPOINT + "subjects?types=vocabulary",
-    {
-      headers: {
-        Authorization: `Bearer ${process.env.WANIKANI_GENERIC_API_KEY}`
-      }
-    }
+  await doFetchSubjects(
+    process.env.WANIKANI_API_ENDPOINT + "subjects?types=vocabulary"
   );
+  console.log(
+    `Loaded ${Object.keys(subjectsById).length} subjects from Wanikani`
+  );
+  subjectsLastLoadedAt = new Date().getTime();
+  return subjectsById;
+}
+
+async function doFetchSubjects(url: string) {
+  console.log("Fetching subjects from", url);
+  const res = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${process.env.WANIKANI_GENERIC_API_KEY}`
+    }
+  });
+
   const data = await res.json();
-
-  // TODO: Handle Wanikani pagination.
-
   data.data.forEach(subject => {
     subjectsById[subject.id] = subject;
   });
-  subjectsLastLoadedAt = new Date().getTime();
-  return subjectsById;
+
+  const nextPage = data.pages.next_url;
+  if (nextPage) {
+    await doFetchSubjects(nextPage);
+  }
 }
 
 /**

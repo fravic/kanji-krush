@@ -7,6 +7,7 @@ import * as express from "express";
 import { importSchema } from "graphql-import";
 import { createConnection } from "typeorm";
 
+import { fetchSubjects } from "./be/lib/wanikani";
 import resolvers from "./be/resolvers";
 import { setupNextJSApp } from "./fe";
 import ormConfig from "./ormconfig";
@@ -64,6 +65,9 @@ export async function startServer(options?: ServerOptions) {
     console.log("App shutting down...");
     // db.close();
   });
+
+  // Prefetch the Wanikani subjects when server starts
+  fetchSubjects();
 
   return httpServer;
 }
