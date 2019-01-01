@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import { Subject } from "fe/lib/subject";
 import { useGameLoop } from "fe/lib/useGameLoop";
@@ -13,29 +13,32 @@ type Props = {
 
 export const SubjectsDisplay = ({ subjects }: Props) => {
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0, dpr: 1 });
-  let canvasRef = null;
+  const canvasRef = useRef(null);
   useGameLoop(() => {
-    if (canvasRef) {
-      drawFrame(canvasRef, windowSize.dpr, subjects);
+    if (canvasRef.current) {
+      drawFrame(canvasRef.current, windowSize.dpr, subjects);
     }
   });
   useEffect(() => {
-    if (window) {
+    function handleWindowResize() {
       setWindowSize({
         width: window.innerWidth,
         height: window.innerHeight,
         dpr: window.devicePixelRatio
       });
     }
-  });
+    if (window) {
+      handleWindowResize();
+      window.addEventListener("resize", handleWindowResize);
+      return () => {
+        window.removeEventListener("resize", handleWindowResize);
+      };
+    }
+  }, []);
   return (
     <canvas
       className={css["canvas"]}
-      ref={ref => {
-        if (ref) {
-          canvasRef = ref;
-        }
-      }}
+      ref={canvasRef}
       width={windowSize.width * windowSize.dpr}
       height={windowSize.height * windowSize.dpr}
     />
