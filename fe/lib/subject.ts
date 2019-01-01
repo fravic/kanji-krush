@@ -5,6 +5,7 @@ import {
   SUBJECT_MIN_START_TIME,
   SUBJECT_MAX_START_TIME
 } from "config";
+import produce from "immer";
 
 // Contains client-side data about a Subject
 export type Subject = {
@@ -16,6 +17,17 @@ export type Subject = {
 };
 
 export function createSubject(gqlSubject: GQLSubject, lanePosition: number) {
+  // Need to set subject timings separately after subject creation
+  return {
+    completed: false,
+    subject: gqlSubject,
+    startTime: 0,
+    expiryTime: 0,
+    lanePosition
+  };
+}
+
+export function setSubjectStartAndExpiryTimes(subject: Subject) {
   const t = new Date().getTime();
   const randDuration = randIntBetween(
     SUBJECT_MIN_LIFETIME,
@@ -24,13 +36,10 @@ export function createSubject(gqlSubject: GQLSubject, lanePosition: number) {
   const startTime =
     t + randIntBetween(SUBJECT_MIN_START_TIME, SUBJECT_MAX_START_TIME);
   const expiryTime = startTime + randDuration;
-  return {
-    completed: false,
-    subject: gqlSubject,
-    startTime,
-    expiryTime,
-    lanePosition
-  };
+  return produce(subject, () => {
+    subject.startTime = startTime;
+    subject.expiryTime = expiryTime;
+  });
 }
 
 function randIntBetween(n1: number, n2: number) {

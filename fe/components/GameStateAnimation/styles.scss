@@ -61,6 +61,16 @@
   }
 }
 
+.game-state-not_started {
+  transition: transform 0.1s ease-out;
+
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
 .game-state-started {
   animation: game-state-started 1.8s forwards;
 }

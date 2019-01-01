@@ -45,9 +45,16 @@ function copyForGameState(
   subjectCount: number
 ): { title: string; subtitle?: string } | null {
   switch (state) {
+    case GameState.NOT_STARTED: {
+      return {
+        title: "Save Tokyo!",
+        subtitle: "Click to start"
+      };
+    }
     case GameState.STARTED: {
       return {
-        title: "Save Tokyo!"
+        title: "Type!",
+        subtitle: "Vocabulary readings"
       };
     }
     case GameState.LOST: {

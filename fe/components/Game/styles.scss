@@ -10,6 +10,8 @@
   background: linear-gradient(150deg, $c-sky-blue, #0051b4);
 
   .input-container {
+    transition: opacity 0.75s linear;
+
     bottom: 50px;
     left: 50%;
     margin-left: -300px;
@@ -17,10 +19,10 @@
     width: 600px;
   }
 
+  &.game-state-not_started,
   &.game-state-won,
   &.game-state-lost {
     .input-container {
-      transition: opacity 0.75s linear;
       opacity: 0;
     }
   }

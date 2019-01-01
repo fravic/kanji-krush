@@ -6,6 +6,7 @@ import css from "./styles.scss";
 
 type Props = {
   onChange: (value: string) => void;
+  onFocus: () => void;
   value: string;
 };
 
@@ -13,7 +14,11 @@ type Props = {
  * KanaInputField
  * Controlled input for inputting hiragana. Focused automatically and when user clicks anywhere.
  */
-export const KanaInputField: React.SFC<Props> = ({ onChange, value }) => {
+export const KanaInputField: React.SFC<Props> = ({
+  onChange,
+  onFocus,
+  value
+}) => {
   let inputRef: HTMLInputElement | null = null;
   useEffect(() => {
     function documentClickHandler(e: MouseEvent) {
@@ -33,6 +38,7 @@ export const KanaInputField: React.SFC<Props> = ({ onChange, value }) => {
       onChange={e =>
         onChange(toHiragana(e.currentTarget.value, { IMEMode: true }))
       }
+      onFocus={onFocus}
       ref={ref => {
         if (ref) {
           inputRef = ref;

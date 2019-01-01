@@ -5,7 +5,7 @@ import { useGameLoop } from "fe/lib/useGameLoop";
 
 import css from "./styles.scss";
 
-const BOTTOM_SPACE = 250;
+const BOTTOM_SPACE = 300;
 
 type Props = {
   subjects: Set<Subject>;

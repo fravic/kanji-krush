@@ -13,7 +13,11 @@ import Header from "fe/components/Header";
 import { KanaInputField } from "fe/components/KanaInputField";
 import { concatCss } from "fe/lib/concatCss";
 import { GameState } from "fe/lib/game";
-import { createSubject, Subject } from "fe/lib/subject";
+import {
+  createSubject,
+  setSubjectStartAndExpiryTimes,
+  Subject
+} from "fe/lib/subject";
 import { useGameLoop } from "fe/lib/useGameLoop";
 
 import css from "./styles.scss";
@@ -25,6 +29,7 @@ type Props = {
 export const Game: React.SFC<Props> = ({ initialSubjects }) => {
   const [gameState, setGameState] = useState(GameState.NOT_STARTED);
   const [kanaInputValue, setKanaInputValue] = useState("");
+  const [kanaInputHasBeenFocused, setKanaInputHasBeenFocused] = useState(false);
   const [subjects, setSubjects] = useState(new Set<Subject>());
   const [correctAnswer, setCorrectAnswer] = useState<CorrectAnswer | null>(
     null
@@ -32,7 +37,9 @@ export const Game: React.SFC<Props> = ({ initialSubjects }) => {
   useEffect(
     () => {
       setSubjects(new Set(initialSubjects.map((s, i) => createSubject(s, i))));
-      setGameState(GameState.STARTED);
+      if (gameState === GameState.NOT_STARTED && kanaInputHasBeenFocused) {
+        startGame(gameState, setGameState, subjects, setSubjects);
+      }
     },
     [initialSubjects]
   );
@@ -54,6 +61,12 @@ export const Game: React.SFC<Props> = ({ initialSubjects }) => {
             setKanaInputValue,
             setCorrectAnswer
           )}
+          onFocus={() => {
+            setKanaInputHasBeenFocused(true);
+            if (gameState === GameState.NOT_STARTED && subjects.size > 0) {
+              startGame(gameState, setGameState, subjects, setSubjects);
+            }
+          }}
           value={kanaInputValue}
         />
         {correctAnswer ? (
@@ -67,6 +80,21 @@ export const Game: React.SFC<Props> = ({ initialSubjects }) => {
     </div>
   );
 };
+
+function startGame(
+  gameState: GameState,
+  setGameState: React.Dispatch<React.SetStateAction<GameState>>,
+  subjects: Set<Subject>,
+  setSubjects: React.Dispatch<React.SetStateAction<Set<Subject>>>
+) {
+  if (gameState !== GameState.NOT_STARTED) {
+    return;
+  }
+  setSubjects(
+    new Set(Array.from(subjects).map(s => setSubjectStartAndExpiryTimes(s)))
+  );
+  setGameState(GameState.STARTED);
+}
 
 function handleKanaInputChange(
   subjects: Set<Subject>,
