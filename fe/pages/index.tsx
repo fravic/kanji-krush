@@ -12,6 +12,7 @@ const gameQueryGQL = gql`
   query {
     game {
       subjects {
+        id
         meanings
         readings
         characters

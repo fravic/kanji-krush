@@ -7,6 +7,7 @@ type Game {
 }
 
 type Subject {
+  id: String!
   characters: String!
   meanings: [String!]
   readings: [String!]
