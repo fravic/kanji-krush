@@ -2,11 +2,16 @@ import { Subject } from "fe/lib/subject";
 
 const BOTTOM_SPACE = 300;
 
+type XY = [number, number];
+
 export type ParticleExplosion = {
   subject: Subject;
   startTime: number;
   endTime: number;
-  numParticles: number;
+  particles: Array<{
+    velocity: XY;
+    size: number;
+  }>;
   blastRadius: number;
 };
 
@@ -81,6 +86,14 @@ function drawParticleExplosion(
     p.blastRadius * 2,
     p.blastRadius * 2
   );
+
+  const k = 0.1;
+  p.particles.forEach(i => {
+    ctx.fillStyle = `rgba(255,255,255,${1 - t / 2})`;
+    const px = lerp(0, i.velocity[0], Math.sqrt(t));
+    const py = lerp(0, i.velocity[1], Math.sqrt(t));
+    ctx.fillRect(x + px, y + py, i.size, i.size);
+  });
 }
 
 function getSubjectPosition(
@@ -100,15 +113,38 @@ function getSubjectPosition(
   return { x, y };
 }
 
-export function createParticleExplosionForSubject(s: Subject) {
+export function createParticleExplosionForSubject(
+  s: Subject
+): ParticleExplosion {
   const t = new Date().getTime();
+  const particles = Array(80)
+    .fill(null)
+    .map(() => {
+      return {
+        position: [0, 0] as [number, number],
+        velocity: [randBetween(20, 100, true), randBetween(20, 100, true)] as [
+          number,
+          number
+        ],
+        size: randBetween(1, 4, false)
+      };
+    });
   return {
     subject: s,
     startTime: t,
 
     // TODO: Randomize these
     endTime: t + 300,
-    numParticles: 80,
-    blastRadius: 75
+    blastRadius: 75,
+    particles
   };
+}
+
+function randBetween(l: number, h: number, posOrNeg: boolean) {
+  const r = Math.random() * (h - l) + l;
+  const i = Math.round(Math.random());
+  if (!i) {
+    return -r;
+  }
+  return r;
 }
