@@ -8,8 +8,16 @@ export default class Document extends NextDocument {
     return (
       <html>
         <Head>
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <link rel="stylesheet" href="https://use.typekit.net/pbj6bex.css" />
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1"
+            key="viewport"
+          />
+          <link
+            rel="stylesheet"
+            href="https://use.typekit.net/pbj6bex.css"
+            key="typekit"
+          />
         </Head>
         <body>
           <Main />

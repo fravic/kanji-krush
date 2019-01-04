@@ -1,4 +1,5 @@
 import gql from "graphql-tag";
+import Head from "next/head";
 import { Query } from "react-apollo";
 
 import { GQLQuery } from "be/schema/graphqlTypes";
@@ -26,6 +27,9 @@ class GameQuery extends Query<GQLQuery> {}
 const Homepage = ({}) => {
   return (
     <Page className={css.homepage}>
+      <Head>
+        <title>Save Tokyo! Japanese Vocabulary Speed Test</title>
+      </Head>
       <GameQuery query={gameQueryGQL}>
         {({ data }) =>
           data && data.game ? (
