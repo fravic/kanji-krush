@@ -10,15 +10,9 @@ import { Context } from "../types";
 export const Query: GQLQueryTypeResolver = {
   game: async (_, args, ctx: Context, info): Promise<GQLGame> => {
     const wanikaniApiKey = ctx.req.cookies.wanikaniApiKey;
-    console.log("Fetching game with api key", wanikaniApiKey);
-    if (!wanikaniApiKey) {
-      // Can't start a game without a user-provided api key
-      return { subjects: [] };
-    }
-
     const subjects = await fetchSubjects();
     const assignments = await fetchStartedAssignments(
-      ctx.req.cookies.wanikaniApiKey
+      wanikaniApiKey
     );
     const startedSubjectIds = new Set(assignments.map(a => a.data.subject_id));
 

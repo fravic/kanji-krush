@@ -53,16 +53,13 @@ async function doFetchSubjects(url: string) {
 export async function fetchStartedAssignments(
   wanikaniApiKey: string
 ): Promise<Assignment[]> {
-  if (!wanikaniApiKey) {
-    console.error("No wanikaniApiKey provided");
-    return [];
-  }
   const res = await fetch(
     process.env.WANIKANI_API_ENDPOINT +
       "assignments?subject_types=vocabulary&started=true",
     {
       headers: {
-        Authorization: `Bearer ${wanikaniApiKey}`
+        // For now, allow users to play with the generic Wanikani API key
+        Authorization: `Bearer ${wanikaniApiKey || process.env.WANIKANI_GENERIC_API_KEY}`
       }
     }
   );
