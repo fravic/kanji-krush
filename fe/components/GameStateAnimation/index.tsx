@@ -3,6 +3,7 @@ import { concatCss } from "fe/lib/concatCss";
 import { GameState } from "fe/lib/game";
 import { Subject } from "fe/lib/subject";
 
+import { EndGameSubjectsTable } from "./EndGameSubjectsTable";
 import css from "./styles.scss";
 
 type Props = {
@@ -35,6 +36,11 @@ export const GameStateAnimation = ({ gameState, subjects }: Props) => {
           {copy.subtitle}
         </Text>
       ) : null}
+      {gameState === GameState.WON || gameState === GameState.LOST ? (
+        <div className={css["table-container"]}>
+          <EndGameSubjectsTable subjects={subjects} />
+        </div>
+      ) : null}
     </div>
   );
 };
@@ -66,13 +72,11 @@ function copyForGameState(
     case GameState.WON: {
       if (subjectsCompleted === subjectCount) {
         return {
-          title: "Our Hero!",
-          subtitle: `${subjectsCompleted} of ${subjectCount} correct`
+          title: "Our Hero!"
         };
       }
       return {
-        title: "Saved!",
-        subtitle: `${subjectsCompleted} of ${subjectCount} correct`
+        title: "Saved!"
       };
     }
     default:
